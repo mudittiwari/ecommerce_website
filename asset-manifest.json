@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.c8d6feee.css",
-    "main.js": "/static/js/main.79251a65.js",
-    "static/media/homepagebg.png": "/static/media/homepagebg.ff07d0712553181b1f6c.png",
-    "static/media/sliderimage.png": "/static/media/sliderimage.ecba9b655c1cc1764db3.png",
-    "static/media/homepagefirstcomp.png": "/static/media/homepagefirstcomp.c8ecd8533c13c2eb167c.png",
-    "static/media/logo.png": "/static/media/logo.e58187292d64ddd8f89e.png",
-    "index.html": "/index.html",
-    "main.c8d6feee.css.map": "/static/css/main.c8d6feee.css.map",
-    "main.79251a65.js.map": "/static/js/main.79251a65.js.map"
+    "main.css": "/ecommerce_website/static/css/main.c8d6feee.css",
+    "main.js": "/ecommerce_website/static/js/main.0a8a0c15.js",
+    "static/media/homepagebg.png": "/ecommerce_website/static/media/homepagebg.ff07d0712553181b1f6c.png",
+    "static/media/sliderimage.png": "/ecommerce_website/static/media/sliderimage.ecba9b655c1cc1764db3.png",
+    "static/media/homepagefirstcomp.png": "/ecommerce_website/static/media/homepagefirstcomp.c8ecd8533c13c2eb167c.png",
+    "static/media/logo.png": "/ecommerce_website/static/media/logo.e58187292d64ddd8f89e.png",
+    "index.html": "/ecommerce_website/index.html",
+    "main.c8d6feee.css.map": "/ecommerce_website/static/css/main.c8d6feee.css.map",
+    "main.0a8a0c15.js.map": "/ecommerce_website/static/js/main.0a8a0c15.js.map"
   },
   "entrypoints": [
     "static/css/main.c8d6feee.css",
-    "static/js/main.79251a65.js"
+    "static/js/main.0a8a0c15.js"
   ]
 }
