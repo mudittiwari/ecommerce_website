@@ -1,5 +1,4 @@
 import React from "react";
-import 'tw-elements';
 import 'flowbite';
 import slidercomp from '../assets/sliderimage.png';
 function Slidercomp() {
