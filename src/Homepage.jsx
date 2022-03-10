@@ -5,9 +5,11 @@ import Slidercomp from './homepagecomps/Slidercomp';
 import '../src/css/homepage.css';
 import Secondcomp from './homepagecomps/Secondcomp';
 import Thirdcomp from './homepagecomps/Thirdcomp';
+import Navbar from './Navbar';
 function Homepage() {
     return (
         <>
+            <Navbar />
             <div className='w-full flex flex-col my-6'>
                 <div>
                     <img src={homepagebg} alt="" />
