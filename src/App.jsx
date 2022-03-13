@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Footermain from './Footermain';
 import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import Products from './Products';
+import Product_page from './Product_page';
 function App()
 {
     return( 
@@ -13,6 +14,7 @@ function App()
                 <Route exact path="/" element={<Homepage/>}/>
                 {/* <Route exact path="/ztechwebsite/" element={<Homepage/>}/> */}
                 <Route exact path="/products" element={<Products/>}/>
+                <Route exact path="/product_page" element={<Product_page/>}/>
             </Routes>
             <Footermain/>
         </BrowserRouter>
