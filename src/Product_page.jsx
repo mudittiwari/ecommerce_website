@@ -2,6 +2,7 @@ import logo from '../src/assets/logo.png';
 import homepagefirstcomp from './assets/homepagefirstcomp.png';
 import group from './assets/Group.png';
 import 'flowbite';
+import Product_page_comp from './Product_page_comp';
 function Product_page() {
     return (
         <>
@@ -117,6 +118,16 @@ function Product_page() {
                             <img src={group} width="50px" alt="" />
                             <span>30 days return</span>
                         </div>
+                    </div>
+                </div>
+
+                <div className='w-full px-10 mt-12'>
+                    <h1 className='text-xl mb-5 text-center'>Related Products</h1>
+                    <div className='w-full flex'>
+                        <Product_page_comp border="yes" />
+                        <Product_page_comp border="yes" />
+                        <Product_page_comp border="yes" />
+                        <Product_page_comp border="no" />
                     </div>
                 </div>
             </div>
