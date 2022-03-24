@@ -12,6 +12,8 @@ import Password from './Password';
 import Createaccount from './Createaccount';
 import Orderconfirmed from './Orderconfirmed';
 import Orders_returns from './Orders_returns';
+import Profile from './Profile';
+import Notifications from './Notifications';
 function App()
 {
     return( 
@@ -26,8 +28,10 @@ function App()
                 <Route exact path="/password" element={<Password/>}/>
                 <Route exact path="/createaccount" element={<Createaccount/>}/>
                 <Route exact path="/orderconfirmed" element={<Orderconfirmed/>}/>
-                <Route exact path="/orders_returns" element={<Orders_returns/>}/>
+                <Route exact path="/orders" element={<Orders_returns/>}/>
                 <Route exact path="/wishlist" element={<Wishlist/>}/>
+                <Route exact path="/profile" element={<Profile/>}/>
+                <Route exact path="/notifications" element={<Notifications/>}/>
                 <Route exact path="/product_page" element={<Product_page/>}/>
             </Routes>
             <Footermain/>

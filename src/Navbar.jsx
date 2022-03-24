@@ -1,5 +1,6 @@
 import logo from '../src/assets/logo.png';
 import '../src/css/navbar.css';
+import { Link } from 'react-router-dom';
 function Navbar()
 {
     return (
@@ -9,13 +10,16 @@ function Navbar()
                 <img  src={logo} height="400px" width="400px" alt="" />
                 </div>
                 <ul className='flex w-full justify-center'>
-                    <li className='mx-4 nav_li capitalize'>Wishlist</li>
-                    <li className='mx-4 nav_li capitalize'>cart</li>
-                    <li className='mx-4 nav_li capitalize'>orders</li>
-                    <li className='mx-4 nav_li capitalize'>notifications</li>
-                    <li className='mx-4 nav_li capitalize'>profile</li>
-                    <li className='mx-4 nav_li capitalize'>help</li>
+                    <li className='mx-4 nav_li capitalize'><Link to="/wishlist">Wishlist</Link></li>
+                    <li className='mx-4 nav_li capitalize'><Link to="/cart">Cart</Link></li>
+                    <li className='mx-4 nav_li capitalize'><Link to="/orders">Orders</Link></li>
+                    <li className='mx-4 nav_li capitalize'><Link to='/notifications'>Notifications</Link></li>
+                    <li className='mx-4 nav_li capitalize'><Link to='/profile'>Profile</Link></li>
+                    <li className='mx-4 nav_li capitalize'><Link to='/help'></Link></li>
                 </ul>
+                <div className='flex justify-center'>
+                <input type="text" placeholder='Search' className='w-1/2 my-6 rounded-3xl' style={{'backgroundColor':'rgba(196, 196, 196, 1)'}} />
+                </div>
             </div>
         </>
     );
