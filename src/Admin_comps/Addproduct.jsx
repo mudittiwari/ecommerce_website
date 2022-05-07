@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import storage from "../Firebase";
 import { useState } from "react";
 import axios from "axios";
+import LoadingBar from "react-top-loading-bar";
 
 function Addproduct() {
+    const ref = useRef(null);
     const [imagearray, changeimagearray] = useState([]);
     const [image, setImage] = useState('');
     const [title, changetitle] = useState('');
@@ -14,10 +16,12 @@ function Addproduct() {
     const [subcategory, changesubcategory] = useState('');
     const [desc, changedesc] = useState('');
     const [price, changeprice] = useState(0);
-    const upload = (e) => {
+    const upload = async (e) => {
+        e.preventDefault();
         // console.log(image);
         if (image == null)
             return;
+        ref.current.continuousStart(0);
         const uploadTask = storage.ref(`/images/${image.name}`).put(image);
         uploadTask.on('state_changed',
             (snapShot) => {
@@ -34,11 +38,14 @@ function Addproduct() {
                         console.log(fireBaseUrl);
                         changeimagearray([...imagearray, fireBaseUrl]);
                     })
+                ref.current.complete();
             })
-        e.preventDefault();
+
+
     }
     return (
         <>
+            <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
             <div className="w-3/4 mx-auto my-5">
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="text" onChange={(e) => {
@@ -91,13 +98,14 @@ function Addproduct() {
                 <div className="flex flex-col w-full justify-center items-center">
                     <div className="mb-10">
                         <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
-                        <button className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" onClick={(e) => {
-                            upload(e);
+                        <button className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" disabled={upload_status} onClick={async (e) => {
+                            upload(e)
                             // e.preventDefault();
                         }}>Upload</button>
                     </div>
-                    <button type="button" className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" onClick={async (e) => {
+                    <button type="button" className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" disabled={submit_status} onClick={async (e) => {
                         e.preventDefault();
+                        ref.current.continuousStart(0);
                         await axios.post("http://localhost:1337/products", {
                             "category_name": category.trim(),
                             "subcategory_name": subcategory.trim(),
@@ -116,7 +124,7 @@ function Addproduct() {
                         }).then((res) => {
                             console.log(res);
                         })
-
+                        ref.current.complete();
                     }}>Submit</button>
                 </div>
             </div>
