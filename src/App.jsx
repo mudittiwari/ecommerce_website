@@ -14,6 +14,8 @@ import Orderconfirmed from './Orderconfirmed';
 import Orders_returns from './Orders_returns';
 import Profile from './Profile';
 import Notifications from './Notifications';
+import Admin_panel from './Admin_panel';
+import AdminLogin from './AdminLogin';
 function App()
 {
     return( 
@@ -33,6 +35,8 @@ function App()
                 <Route exact path="/profile" element={<Profile/>}/>
                 <Route exact path="/notifications" element={<Notifications/>}/>
                 <Route exact path="/product_page" element={<Product_page/>}/>
+                <Route exact path="/Admin_Panel" element={<AdminLogin/>}/>
+                <Route exact path="/Admin_dashboard" element={<Admin_panel/>}/>
             </Routes>
             <Footermain/>
         </BrowserRouter>
