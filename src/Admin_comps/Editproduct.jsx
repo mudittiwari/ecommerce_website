@@ -1,71 +1,60 @@
-import React, { useEffect, useRef } from "react";
-import storage from "../Firebase";
+import React from "react";
 import { useState } from "react";
-import axios from "axios";
+import { useRef } from "react";
+import storage from "../Firebase";
 import LoadingBar from "react-top-loading-bar";
-
-function Addproduct() {
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+function Editproduct(props) {
     const ref = useRef(null);
+    const navigate=useNavigate();
+    
+    const location=useLocation();
     const [submit_status,changesubstatus]=useState(false);
     const [upload_status,changeupstatus]=useState(false);
-    const [imagearray, changeimagearray] = useState([]);
+    const [imagearray, changeimagearray] = useState(JSON.parse(location.state.photos));
     const [image, setImage] = useState('');
-    const [title, changetitle] = useState('');
-    const [quantity, changequantity] = useState(0);
-    const [actual_price, changeactual_price] = useState(0);
-    const [discount, changediscount] = useState(0);
-    const [category, changecategory] = useState('');
-    const [subcategory, changesubcategory] = useState('');
-    const [desc, changedesc] = useState('');
-    const [price, changeprice] = useState(0);
+    const [title, changetitle] = useState(location.state.product_name);
+    const [quantity, changequantity] = useState(location.state.quantity);
+    const [actual_price, changeactual_price] = useState(location.state.actual_price);
+    const [discount, changediscount] = useState(location.state.discount);
+    const [category, changecategory] = useState(location.state.category_name);
+    const [subcategory, changesubcategory] = useState(location.state.subcategory_name);
+    const [desc, changedesc] = useState(location.state.desc);
+    const [price, changeprice] = useState(location.state.price);
     const upload = async (e) => {
-        
         e.preventDefault();
         // console.log(image);
         if (image == null)
             return;
-        changeupstatus(true);
-        changesubstatus(true);
-        
         ref.current.continuousStart(0);
         const uploadTask = storage.ref(`/images/${image.name}`).put(image);
         uploadTask.on('state_changed',
             (snapShot) => {
                 //takes a snap shot of the process as it is happening
-                console.log(snapShot);
+                console.log(snapShot)
             }, (err) => {
                 //catches the errors
-                console.log(err);
-                ref.current.complete();
-                changeupstatus(false);
-                changesubstatus(false);
+                console.log(err)
             }, () => {
                 // gets the functions from storage refences the image storage in firebase by the children
                 // gets the download url then sets the image from firebase as the value for the imgUrl key:
-                console.log(submit_status, upload_status);
                 storage.ref('images').child(image.name).getDownloadURL()
                     .then(fireBaseUrl => {
                         console.log(fireBaseUrl);
                         changeimagearray([...imagearray, fireBaseUrl]);
-                    });
+                    })
                 ref.current.complete();
-                changeupstatus(false);
-                changesubstatus(false);
-            });
-            
-            // console.log(submit_status,upload_status);
-            // changeupstatus(false);
+            })
+
 
     }
-    // useEffect(()=>{
-    //     console.log(upload_status)
-    //     console.log(submit_status);
-    // },[upload_status,submit_status])
     return (
         <>
             <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
             <div className="w-3/4 mx-auto my-5">
-                <h1 className="text-white text-xl font-bold my-10 mx-auto w-1/2 text-center">Add Product</h1>
+            <h1 className="text-white text-xl font-bold my-10 mx-auto w-1/2 text-center">Update Product</h1>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="text" onChange={(e) => {
                         changetitle(e.target.value);
@@ -125,9 +114,7 @@ function Addproduct() {
                     <button type="button" className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" disabled={submit_status} onClick={async (e) => {
                         e.preventDefault();
                         ref.current.continuousStart(0);
-                        changeupstatus(true);
-                        changesubstatus(true);
-                        await axios.post("http://localhost:1337/products", {
+                        await axios.put(`http://localhost:1337/products/${location.state.id}`, {
                             "category_name": category.trim(),
                             "subcategory_name": subcategory.trim(),
                             "product_name": title.trim(),
@@ -143,11 +130,15 @@ function Addproduct() {
                                     `Bearer ${localStorage.getItem('jwt')}`,
                             },
                         }).then((res) => {
+                            // alert("product edit successfull");
                             console.log(res);
+                        }).catch((err)=>{
+                            // alert("product edit unsuccessfull");
+                            console.log(err);
                         })
-                        changeupstatus(false);
-                        changesubstatus(false);
                         ref.current.complete();
+                        
+                        navigate(-1);
                     }}>Submit</button>
                 </div>
             </div>
@@ -156,4 +147,4 @@ function Addproduct() {
 }
 
 
-export default Addproduct;
+export default Editproduct;

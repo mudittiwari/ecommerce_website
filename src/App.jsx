@@ -16,6 +16,7 @@ import Profile from './Profile';
 import Notifications from './Notifications';
 import Admin_panel from './Admin_panel';
 import AdminLogin from './AdminLogin';
+import Editproduct from './Admin_comps/Editproduct';
 function App()
 {
     return( 
@@ -37,6 +38,7 @@ function App()
                 <Route exact path="/product_page" element={<Product_page/>}/>
                 <Route exact path="/Admin_Panel" element={<AdminLogin/>}/>
                 <Route exact path="/Admin_dashboard" element={<Admin_panel/>}/>
+                <Route exact path="/Admin_dashboard/products/editproduct" element={<Editproduct/>}/>
             </Routes>
             <Footermain/>
         </BrowserRouter>
