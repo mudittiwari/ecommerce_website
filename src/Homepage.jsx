@@ -6,7 +6,15 @@ import '../src/css/homepage.css';
 import Secondcomp from './homepagecomps/Secondcomp';
 import Thirdcomp from './homepagecomps/Thirdcomp';
 import Navbar from './Navbar';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 function Homepage() {
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if (!localStorage.getItem('user')) {
+            navigate("/login");
+        }
+    },[])
     return (
         <>
             <Navbar />

@@ -58,7 +58,7 @@ function AdminLogin() {
                     // }).then((res) => {
                     //     console.log(res);
                     // })
-                    await axios.post('http://localhost:1337/auth/local', {
+                    await axios.post('https://infinite-falls-68793.herokuapp.com/auth/local', {
                         'identifier': email,
                         "password": password,
                     }).then((res) => {
@@ -66,6 +66,7 @@ function AdminLogin() {
                         // console.log(res.data);
                         localStorage.setItem('user', JSON.stringify(res.data.user));
                         localStorage.setItem('jwt',res.data.jwt);
+                        navigate("/Admin_dashboard");
                     }).catch((err) => {
                         console.log(err);
                     });

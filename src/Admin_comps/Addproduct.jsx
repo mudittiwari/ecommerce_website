@@ -127,7 +127,7 @@ function Addproduct() {
                         ref.current.continuousStart(0);
                         changeupstatus(true);
                         changesubstatus(true);
-                        await axios.post("http://localhost:1337/products", {
+                        await axios.post("https://infinite-falls-68793.herokuapp.com/products", {
                             "category_name": category.trim(),
                             "subcategory_name": subcategory.trim(),
                             "product_name": title.trim(),
@@ -144,6 +144,8 @@ function Addproduct() {
                             },
                         }).then((res) => {
                             console.log(res);
+                        }).catch((err)=>{
+                            console.log(err);
                         })
                         changeupstatus(false);
                         changesubstatus(false);

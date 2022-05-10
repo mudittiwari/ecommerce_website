@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 function Editproduct(props) {
     const ref = useRef(null);
     const navigate=useNavigate();
-    
     const location=useLocation();
     const [submit_status,changesubstatus]=useState(false);
     const [upload_status,changeupstatus]=useState(false);

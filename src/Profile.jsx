@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Profile_comp() {
     return (
@@ -51,7 +52,7 @@ function Address_comp() {
 
 
 function Profile() {
-
+    const navigate=useNavigate();
     const [bg, changebg] = useState(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent']);
     return (
         <>
@@ -91,7 +92,12 @@ function Profile() {
                         </li>
                         <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[3]}`, 'position': 'relative', 'left': '56px' }}>
                             <button className="text-black font-semibold w-full text-left" onClick={() => {
-                                changebg(['transparent', 'transparent', 'transparent', 'white', 'transparent', 'transparent'])
+
+                                changebg(['transparent', 'transparent', 'transparent', 'white', 'transparent', 'transparent']);
+                                localStorage.removeItem('user');
+                                localStorage.removeItem('jwt');
+                                navigate("/login");
+
                             }}>Logout</button>
                         </li>
                         <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[4]}`, 'position': 'relative', 'left': '56px' }}>
