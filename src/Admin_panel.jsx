@@ -9,7 +9,12 @@ import Products from "./Admin_comps/Products";
     
 async function fetchproducts() {
     var prods;
-    await axios.get("http://localhost:1337/products").then((res)=>{
+    await axios.get("https://infinite-falls-68793.herokuapp.com/products",{
+        headers: {
+            Authorization:
+                `Bearer ${localStorage.getItem('jwt')}`,
+        },
+    }).then((res)=>{
         prods=res.data;
     });
     return prods;
@@ -47,6 +52,8 @@ function Admin_panel() {
                                 // var lst=[];
                                 // lst.le=
                                 // console.log(products);
+                            }).catch((err)=>{
+                                console.log(err);
                             });
                             
                             // changeproducts(prods);

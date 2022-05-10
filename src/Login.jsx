@@ -58,6 +58,14 @@ function Login() {
                         Terms & Privacy Policy
                     </button>
                 </div>
+                <div className="flex justify-center mt-20 mb-5">
+                    <button className="text-xs" onClick={(e)=>{
+                        e.preventDefault();
+                        navigate("/Admin_Panel");
+                    }}>
+                        Admin Login
+                    </button>
+                </div>
             </div>
         </>
     );
