@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import 'flowbite';
 import storage from "./Firebase";
 import { useState } from "react";
@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Addproduct from "./Admin_comps/Addproduct";
 import Products from "./Admin_comps/Products";
-    
+import LoadingBar from "react-top-loading-bar";
+
 async function fetchproducts() {
     var prods;
     await axios.get("https://infinite-falls-68793.herokuapp.com/products",{
@@ -20,6 +21,7 @@ async function fetchproducts() {
     return prods;
 }
 function Admin_panel() {
+    const ref=useRef(null);
     const navigate=useNavigate();
     const [comp,changecomp]=useState('addproduct');
     const [products,changeproducts]=useState();
@@ -30,10 +32,10 @@ function Admin_panel() {
             // changecomp("products");
             // console.log(products);
         });
-    },[])
+    },[products])
     return (
         <>
-            
+             <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
             <nav className="bg-white" style={{'zIndex':0}}>
                 <div>
                     <ul className="flex">
@@ -45,13 +47,16 @@ function Admin_panel() {
                         </li>
                         <li className="px-4 py-3 cursor-pointer" onClick={async()=>{
                             var prods;
+                            ref.current.continuousStart(0);
                             fetchproducts().then((res)=>{
+                                ref.current.complete();
                                 // console.log(res);
                                 changeproducts(res);
+                                console.log(products);
                                 changecomp("products");
                                 // var lst=[];
                                 // lst.le=
-                                // console.log(products);
+                                console.log(products);
                             }).catch((err)=>{
                                 console.log(err);
                             });

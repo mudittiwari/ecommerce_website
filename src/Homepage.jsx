@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import homepagebg from '../src/assets/homepagebg.png';
 import Firstcomp from './homepagecomps/Firstcomp';
 import Slidercomp from './homepagecomps/Slidercomp';
@@ -8,13 +8,57 @@ import Thirdcomp from './homepagecomps/Thirdcomp';
 import Navbar from './Navbar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 function Homepage() {
-    const navigate=useNavigate();
-    useEffect(()=>{
-        if (!localStorage.getItem('user')) {
-            navigate("/login");
+    const [sectionone, changeone] = useState([]);
+    const [sectiontwo, changetwo] = useState([]);
+    const navigate = useNavigate();
+    useEffect(async () => {
+        var prod_array = [];
+        await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectionone").then((res) => {
+            // console.log(res.data.products);
+            prod_array = JSON.parse(res.data.products);
+        }).catch((err) => {
+            console.log(err);
+        });
+        console.log(prod_array);
+        let arr = [];
+        for (let index = 0; index < prod_array.length; index++) {
+            const element = prod_array[index];
+
+            // console.log(element);
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${element}`).then((res) => {
+                arr.push(res.data);
+                // changeone(arr);
+            }).catch((err) => {
+                console.log(err);
+            });
+            
         }
-    },[])
+        changeone(arr);
+        prod_array=[];
+        arr=[];
+        await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectiontwo").then((res) => {
+            // console.log(res.data.products);
+            prod_array = JSON.parse(res.data.products);
+        }).catch((err) => {
+            console.log(err);
+        });
+        // console.log(prod_array);
+        for (let index = 0; index < prod_array.length; index++) {
+            const element = prod_array[index];
+
+            // console.log(element);
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${element}`).then((res) => {
+                arr.push(res.data);
+                // changeone(arr);
+            }).catch((err) => {
+                console.log(err);
+            });
+            
+        }
+        changetwo(arr);
+    }, [])
     return (
         <>
             <Navbar />
@@ -65,17 +109,15 @@ function Homepage() {
                 </div>
                 <div className='my-6 text-center'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex justify-around'>
-                        <Firstcomp />
-                        <Firstcomp />
-                        <Firstcomp />
-
-                    </div>
-                    <div className='flex justify-around mt-6'>
-                        <Firstcomp />
-                        <Firstcomp />
-                        <Firstcomp />
-
+                    
+                    
+                    {/* {sectionone.length} */}
+                    <div className='flex flex-wrap justify-center'>
+                        {sectionone.map((element, index) => {
+                            return <Firstcomp data={element}  />
+                                
+                            
+                        })}
                     </div>
                 </div>
 
@@ -87,11 +129,12 @@ function Homepage() {
 
                 <div className='my-6 text-center'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex justify-around'>
-                        <Firstcomp />
-                        <Firstcomp />
-                        <Firstcomp />
-
+                    <div className='flex flex-wrap justify-center'>
+                        {sectiontwo.map((element, index) => {
+                            return <Firstcomp data={element}  />
+                                
+                            
+                        })}
                     </div>
                 </div>
 
