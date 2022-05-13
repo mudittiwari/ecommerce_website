@@ -33,7 +33,7 @@ function Login() {
                     <button className="text-white text-lg font-semibold mt-5" onClick={async(e)=>{
                         e.preventDefault();
                         ref.current.continuousStart(0);
-                        await axios.post("http://localhost:1337/auth/local/",{
+                        await axios.post("https://infinite-falls-68793.herokuapp.com/auth/local/",{
                             "identifier":email,
                             "password":password
                         }).then((res)=>{
