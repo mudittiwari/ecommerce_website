@@ -12,7 +12,7 @@ function Homepagecomp() {
         // console.log("mudit tiwari");
         // console.log(localStorage.getItem('jwt'));
        
-            await axios.get(`http://localhost:1337/${location.state.comp}`, {
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/${location.state.comp}`, {
                 headers: {
                     Authorization:
                         `Bearer ${localStorage.getItem('jwt')}`,
@@ -43,7 +43,7 @@ function Homepagecomp() {
                         e.preventDefault();
                         ref.current.continuousStart(0);
                         changesubstatus(true);
-                        await axios.get(`http://localhost:1337/products/${prod_id}`, {
+                        await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${prod_id}`, {
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
                             }
@@ -59,7 +59,7 @@ function Homepagecomp() {
                             return;
                         }
                         
-                            await axios.get(`http://localhost:1337/${location.state.comp}`, {
+                            await axios.get(`https://infinite-falls-68793.herokuapp.com/${location.state.comp}`, {
                                 headers: {
                                     Authorization: `Bearer ${localStorage.getItem('jwt')}`
                                 }
@@ -82,7 +82,7 @@ function Homepagecomp() {
                                 // console.log(prods);
                                 prods = JSON.stringify(prods);
                                 // console.log(prods);
-                                await axios.put(`http://localhost:1337/${location.state.comp}`, {
+                                await axios.put(`https://infinite-falls-68793.herokuapp.com/${location.state.comp}`, {
                                     "products": prods
                                 }, {
                                     headers: {
@@ -134,7 +134,7 @@ function Homepagecomp() {
                                         console.log(temp_list);
                                         
                                         // console.log(products_list);
-                                        await axios.put(`http://localhost:1337/${location.state.comp}`, {
+                                        await axios.put(`https://infinite-falls-68793.herokuapp.com/${location.state.comp}`, {
                                             "products": JSON.stringify(temp_list)
                                         }, {
                                             headers: {

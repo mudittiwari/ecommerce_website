@@ -110,7 +110,7 @@ function Address_comp() {
         <>
             <div className="flex flex-col w-full px-5 py-10 items-center justify-center">
                 <h1 className="font-semibold text-xl text-center my-6">Address</h1>
-                <p className="rounded  px-8 py-4 text-black" style={{ 'backgroundColor': 'rgba(236, 232, 232, 1)' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quisquam iure rerum eum cum tempora, maxime doloribus sed et illo corporis illum quis assumenda ipsam reiciendis nobis blanditiis, iusto laudantium. Ullam, a impedit commodi amet accusamus porro doloribus libero. Dolores quas quis obcaecati explicabo molestiae, temporibus alias aperiam nemo incidunt.</p>
+                <p className="rounded  px-8 py-4 text-black" style={{ 'backgroundColor': 'rgba(236, 232, 232, 1)' }}>{JSON.parse(localStorage.getItem('user')).address}</p>
             </div>
         </>
     );

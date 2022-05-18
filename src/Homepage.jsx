@@ -8,12 +8,22 @@ import Thirdcomp from './homepagecomps/Thirdcomp';
 import Navbar from './Navbar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 import axios from 'axios';
+import LoadingBar from "react-top-loading-bar";
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 function Homepage() {
+    const ref = useRef(null);
     const [sectionone, changeone] = useState([]);
     const [sectiontwo, changetwo] = useState([]);
+    const [sectionthree, changethree] = useState([]);
+    const [sectionfour, changefour] = useState([]);
+    const [sectionthreekey, changethreekey] = useState(Math.random());
     const navigate = useNavigate();
     useEffect(async () => {
+        ref.current.continuousStart(0);
         var prod_array = [];
         await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectionone").then((res) => {
             // console.log(res.data.products);
@@ -33,11 +43,11 @@ function Homepage() {
             }).catch((err) => {
                 console.log(err);
             });
-            
+
         }
         changeone(arr);
-        prod_array=[];
-        arr=[];
+        prod_array = [];
+        arr = [];
         await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectiontwo").then((res) => {
             // console.log(res.data.products);
             prod_array = JSON.parse(res.data.products);
@@ -55,12 +65,59 @@ function Homepage() {
             }).catch((err) => {
                 console.log(err);
             });
-            
+
         }
         changetwo(arr);
+        prod_array = [];
+        arr = [];
+        await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectionthree").then((res) => {
+            // console.log(res.data.products);
+            prod_array = JSON.parse(res.data.products);
+        }).catch((err) => {
+            console.log(err);
+        });
+        // console.log(prod_array);
+        for (let index = 0; index < prod_array.length; index++) {
+            const element = prod_array[index];
+
+            // console.log(element);
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${element}`).then((res) => {
+                arr.push(res.data);
+                // changeone(arr);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        }
+        changethree(arr);
+        changethreekey(Math.random());
+        prod_array = [];
+        arr = [];
+        await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectionfour").then((res) => {
+            // console.log(res.data.products);
+            prod_array = JSON.parse(res.data.products);
+        }).catch((err) => {
+            console.log(err);
+        });
+        // console.log(prod_array);
+        for (let index = 0; index < prod_array.length; index++) {
+            const element = prod_array[index];
+
+            // console.log(element);
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${element}`).then((res) => {
+                arr.push(res.data);
+                // changeone(arr);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        }
+        changefour(arr);
+        ref.current.complete();
     }, [])
     return (
         <>
+            <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
             <Navbar />
             <div className='w-full flex flex-col my-6'>
                 <div>
@@ -109,14 +166,14 @@ function Homepage() {
                 </div>
                 <div className='my-6 text-center'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    
-                    
+
+
                     {/* {sectionone.length} */}
                     <div className='flex flex-wrap justify-center'>
                         {sectionone.map((element, index) => {
-                            return <Firstcomp data={element}  />
-                                
-                            
+                            return <Firstcomp data={element} />
+
+
                         })}
                     </div>
                 </div>
@@ -131,9 +188,7 @@ function Homepage() {
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
                     <div className='flex flex-wrap justify-center'>
                         {sectiontwo.map((element, index) => {
-                            return <Firstcomp data={element}  />
-                                
-                            
+                            return <Firstcomp data={element} />
                         })}
                     </div>
                 </div>
@@ -141,22 +196,33 @@ function Homepage() {
                 <div className='my-6 py-6 text-center bg-white'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
                     <div className='flex justify-around'>
-                        <Secondcomp />
+                        <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" margin={40} autoplay={true}>
+
+                            {sectionthree.map((element, index) => {
+                                // console.log(element.id);
+                                return <div onClick={(e)=>{
+                                    e.preventDefault();
+                                    navigate("/product_page",{state:element});
+                    
+                                }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                    <img className="w-4/5" src={JSON.parse(element.photos)[0]} alt="" />
+                                    <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                    <h6 className='text-black text-center'>{element.brand}</h6>
+                                    <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                </div>
+                            })}
+
+                        </OwlCarousel>
 
                     </div>
                 </div>
 
                 <div className='my-6 text-center'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex justify-around'>
-                        <Thirdcomp />
-                        <Thirdcomp />
-
-                    </div>
-                    <div className='flex justify-around mt-6'>
-                        <Thirdcomp />
-                        <Thirdcomp />
-
+                    <div className='flex flex-wrap justify-center'>
+                    {sectionfour.map((element, index) => {
+                            return <Thirdcomp data={element} />
+                        })}
                     </div>
                 </div>
             </div>

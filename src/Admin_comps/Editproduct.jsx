@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import storage from "../Firebase";
@@ -12,7 +12,7 @@ function Editproduct(props) {
     const location=useLocation();
     const [submit_status,changesubstatus]=useState(false);
     const [upload_status,changeupstatus]=useState(false);
-    const [imagearray, changeimagearray] = useState(JSON.parse(location.state.photos));
+    const [imagearray, changeimagearray] = useState([]);
     const [image, setImage] = useState('');
     const [title, changetitle] = useState(location.state.product_name);
     const [quantity, changequantity] = useState(location.state.quantity);
@@ -22,6 +22,12 @@ function Editproduct(props) {
     const [subcategory, changesubcategory] = useState(location.state.subcategory_name);
     const [desc, changedesc] = useState(location.state.desc);
     const [price, changeprice] = useState(location.state.price);
+    useEffect(()=>{
+        if(location.state.photos)
+        {
+            changeimagearray(JSON.parse(location.state.photos));
+        }
+    },[]);
     const upload = async (e) => {
         e.preventDefault();
         // console.log(image);
@@ -113,7 +119,7 @@ function Editproduct(props) {
                     <button type="button" className="bg-pink-900 w-24 rounded border-0 px-4 py-3 my-2 mx-8" disabled={submit_status} onClick={async (e) => {
                         e.preventDefault();
                         ref.current.continuousStart(0);
-                        await axios.put(`http://localhost:1337/products/${location.state.id}`, {
+                        await axios.put(`https://infinite-falls-68793.herokuapp.com/products/${location.state.id}`, {
                             "category_name": category.trim(),
                             "subcategory_name": subcategory.trim(),
                             "product_name": title.trim(),

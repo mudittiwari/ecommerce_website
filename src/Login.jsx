@@ -50,7 +50,10 @@ function Login() {
                 </div>
                 <div className="flex justify-center flex-col items-center">
                     <h1 className="text-sm text-center mt-14">Don't Have an Account</h1>
-                    <button className="text-white text-base mt-2 px-20 py-1 rounded-md" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>CREATE ACCOUNT</button>
+                    <button onClick={(e)=>{
+                        e.preventDefault();
+                        navigate("/createaccount");
+                    }} className="text-white text-base mt-2 px-20 py-1 rounded-md" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>CREATE ACCOUNT</button>
                 </div>
 
                 <div className="flex justify-center mt-20 mb-5">

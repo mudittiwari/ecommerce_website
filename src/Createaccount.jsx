@@ -41,7 +41,9 @@ function Createaccount() {
                     <input value={mobile} onChange={((e)=>{
                         changemobile(e.target.value);
                     })} className="w-full text-black border-t-0 border-x-0 my-3" type="tel" placeholder="Mobile no." />
-                    <input className="w-full border-t-0 text-black border-x-0 my-3" type="text" placeholder="Address" />
+                    <input onChange={((e)=>{
+                        changeaddress(e.target.value);
+                    })} className="w-full border-t-0 text-black border-x-0 my-3" type="text" placeholder="Address" />
                     <div className="flex justify-around my-3">
                         <div onChange={(e)=>{
                             changegender(e.target.value);
@@ -63,7 +65,7 @@ function Createaccount() {
                     onClick={(async(e)=>{
                         e.preventDefault();
                         ref.current.continuousStart(0);
-                        await axios.post("http://localhost:1337/auth/local/register",{
+                        await axios.post("https://infinite-falls-68793.herokuapp.com/auth/local/register",{
                             "username":email,
                             "email":email,
                             "password":password,
@@ -72,7 +74,9 @@ function Createaccount() {
                             "age":age,
                             "address":address,
                             "mobile":mobile,
-                            "altmob":altmob
+                            "altmob":altmob,
+                            "wishlist":JSON.stringify([]),
+                            "cart":JSON.stringify([])
                         }).then((res)=>{
                             ref.current.complete();
                             localStorage.setItem('user', JSON.stringify(res.data.user));
