@@ -32,7 +32,7 @@ function Product_page() {
     // console.log(data);
     return (
         <>
-        <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+        <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
             <div className='w-full flex flex-col my-6'>
                 <div className='flex justify-center w-100'>
                     <img src={logo} height="200px" width="200px" alt="" />

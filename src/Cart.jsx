@@ -18,6 +18,32 @@ function Cart() {
     // if (JSON.parse(localStorage.getItem('user')).cart) {
     //     changecart();
     // }
+    async function placeorder()
+    {
+        ref.current.continuousStart(0);
+        let products=[];
+        for (let index = 0; index < cartelem.length; index++) {
+            products.push(cartelem[index].id);
+        }
+        await axios.post("http://localhost:1337/orders",{
+            "user_email":JSON.parse(localStorage.getItem('user')).email,
+            "address":JSON.parse(localStorage.getItem('user')).address,
+            "date":"not provided",
+            "products":JSON.stringify(products),
+            "total_amount":price,
+        }, {
+            headers: {
+                Authorization:
+                    `Bearer ${localStorage.getItem('jwt')}`,
+            },
+        }).then((res)=>{
+            console.log(res);
+
+        }).catch((err)=>{
+            console.log(err);
+        });
+        ref.current.complete();
+    }
     useEffect(async () => {
         temp_price = 0;
         temp_discount = 0;
@@ -160,7 +186,10 @@ function Cart() {
                                 <h1 className=" text-black text-base mt-2">Rs.</h1>
                             </div>
                             <div className="text-center mt-3">
-                                <button className="w-max mt-2 font-semibold bg-transparent px-10 text-sm py-1 text-black h-max mx-auto" style={{ 'backgroundColor': "#C4C4C4" }}>Place Order</button>
+                                <button onClick={(e)=>{
+                                    e.preventDefault();
+                                    placeorder();
+                                }} className="w-max mt-2 font-semibold bg-transparent px-10 text-sm py-1 text-black h-max mx-auto" style={{ 'backgroundColor': "#C4C4C4" }}>Place Order</button>
                             </div>
                         </div>
                     </div>
