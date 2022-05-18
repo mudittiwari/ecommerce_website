@@ -25,7 +25,7 @@ function Cart() {
         for (let index = 0; index < cartelem.length; index++) {
             products.push(cartelem[index].id);
         }
-        await axios.post("http://localhost:1337/orders",{
+        await axios.post("https://infinite-falls-68793.herokuapp.com/orders",{
             "user_email":JSON.parse(localStorage.getItem('user')).email,
             "address":JSON.parse(localStorage.getItem('user')).address,
             "date":"not provided",
