@@ -14,11 +14,11 @@ function Profile_comp() {
     const [altmob, changealtmob] = useState(JSON.parse(localStorage.getItem('user')).altmob);
     const [status, changestatus] = useState("edit");
     const [statuskey, changestatuskey] = useState(Math.random());
-    const [reload,changereload]=useState(false);
-    useEffect(()=>{
+    const [reload, changereload] = useState(false);
+    useEffect(() => {
         turndisabled(true);
         changestatus("edit");
-    },[reload]);
+    }, [reload]);
     return (
         <>
             <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
@@ -52,7 +52,7 @@ function Profile_comp() {
                     }
                     else {
                         ref.current.continuousStart(0);
-                        await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`, 
+                        await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
                             {
                                 "username": email,
                                 "email": email,
@@ -73,7 +73,7 @@ function Profile_comp() {
                                 console.log(res.data);
                                 changestatuskey(Math.random());
                                 changereload(true);
-                                localStorage.setItem('user',JSON.stringify(res.data));
+                                localStorage.setItem('user', JSON.stringify(res.data));
                                 ref.current.complete();
                             }).catch((err) => {
                                 console.log(err);
@@ -115,15 +115,37 @@ function Address_comp() {
         </>
     );
 }
-
+function Resest_password() {
+    const ref=useRef();
+    return (
+        <>
+            <div className="flex flex-col w-full h-full px-5 py-10 items-center justify-center">
+            <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+                <button className="w-56 py-2 px-2 rounded bg-white text-black font-semibold" onClick={async(e) => {
+                    e.preventDefault();
+                    ref.current.continuousStart(0);
+                    await axios.post("http://localhost:1337/auth/forgot-password", {
+                        "email": JSON.parse(localStorage.getItem('user')).email
+                    }).then((res) => {
+                        console.log(res);
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                    ref.current.complete();
+                }}>Send Email</button>
+            </div>
+        </>
+    );
+}
 
 function Profile() {
+    
     const navigate = useNavigate();
     const [bg, changebg] = useState(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent']);
     return (
         <>
             <div className="w-full flex">
-                {/* <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} /> */}
+                
                 <div className="w-1/4 h-max py-10 px-5 flex flex-col rounded-md" style={{ 'backgroundColor': 'rgba(186, 182, 182, 1)' }}>
                     <div className="flex items-center">
                         <div className="flex">
@@ -170,6 +192,7 @@ function Profile() {
                         <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[4]}`, 'position': 'relative', 'left': '56px' }}>
                             <button className="text-black font-semibold w-full text-left" onClick={() => {
                                 changebg(['transparent', 'transparent', 'transparent', 'transparent', 'white', 'transparent'])
+
                             }}>Change Password</button>
                         </li>
                         <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[5]}`, 'position': 'relative', 'left': '56px' }}>
@@ -183,7 +206,7 @@ function Profile() {
 
                 <div className="w-3/4">
                     {
-                        bg[0] == 'white' ? <Coupons_comp /> : (bg[1] == 'white' ? <Profile_comp /> : <Address_comp />)
+                        bg[0] == 'white' ? <Coupons_comp /> : (bg[1] == 'white' ? <Profile_comp /> : (bg[2] == 'white' ? <Address_comp /> : (bg[4] == 'white' ? <Resest_password /> : <h1></h1>)))
                     }
                 </div>
             </div>

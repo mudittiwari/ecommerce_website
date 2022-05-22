@@ -17,8 +17,11 @@ function Navbar()
                     <li className='mx-4 nav_li capitalize'><Link to="/orders">Orders</Link></li>
                     <li className='mx-4 nav_li capitalize'><Link to='/notifications'>Notifications</Link></li>
                     <li className='mx-4 nav_li capitalize'><Link to='/profile'>Profile</Link></li>
-                    <li className='mx-4 nav_li capitalize'><Link to='/help'></Link></li>
-                </ul>:<h1></h1>}
+                    <li className='mx-4 nav_li capitalize'><Link to='/products'>products</Link></li>
+                </ul>:<ul className='flex w-full justify-center'>
+                   
+                    <li className='mx-4 nav_li capitalize'><Link to='/login'>Login</Link></li>
+                </ul>}
                 <div className='flex justify-center'>
                 <input type="text" placeholder='Search' className='w-1/2 my-6 rounded-3xl' style={{'backgroundColor':'rgba(196, 196, 196, 1)'}} />
                 </div>

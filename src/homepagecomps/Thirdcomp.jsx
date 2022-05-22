@@ -11,7 +11,7 @@ function Thirdcomp(props)
                 navigate("/product_page",{state:props.data});
 
             }} className="w-5/12 h-max px-5 mx-8 my-4 py-14 bg-white rounded-lg flex justify-center">
-                <img className="w-2/5" src={JSON.parse(props.data.photos)[0]} alt="" />
+                <div className="w-2/5" ><img className="object-fill" src={JSON.parse(props.data.photos)[0]} alt="" /></div>
                 <div className="flex flex-col items-center justify-around mx-5 w-3/5">
                     <h6 className="font-bold text-xl text-black my-2">{props.data.product_name}</h6>
                     <p className="text-black text-xs font-bold my-2 w-full break-words">{props.data.desc}</p>

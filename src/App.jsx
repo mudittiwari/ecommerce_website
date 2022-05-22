@@ -19,6 +19,7 @@ import AdminLogin from './AdminLogin';
 import Editproduct from './Admin_comps/Editproduct';
 import Homepagecomp from './Admin_comps/Homepagecomp';
 import Cart from './Cart';
+import Forgotpassword from './Forgotpassword';
 function App()
 {
     return( 
@@ -37,6 +38,7 @@ function App()
                 <Route exact path="/wishlist" element={<Wishlist/>}/>
                 <Route exact path="/profile" element={<Profile/>}/>
                 <Route exact path="/cart" element={<Cart/>}/>
+                <Route exact path="/forgot-password/:code" element={<Forgotpassword/>}/>
                 <Route exact path="/notifications" element={<Notifications/>}/>
                 <Route exact path="/product_page" element={<Product_page/>}/>
                 <Route exact path="/Admin_Panel" element={<AdminLogin/>}/>

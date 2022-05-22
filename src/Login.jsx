@@ -48,6 +48,27 @@ function Login() {
                         });
                     }}>Continue</button>
                 </div>
+                <div className="flex justify-center mt-5 mb-5">
+                    <button className="text-xs" onClick={async(e)=>{
+                        e.preventDefault();
+                        if(!email)
+                            alert("please enter a email");
+                        else
+                        {
+                            ref.current.continuousStart(0);
+                            await axios.post("http://localhost:1337/auth/forgot-password",{
+                                "email":email
+                            }).then((res)=>{
+                                console.log(res);
+                            }).catch((err)=>{
+                                console.log(err);
+                            });
+                            ref.current.complete();
+                        }
+                    }}>
+                        Forgot Password
+                    </button>
+                </div>
                 <div className="flex justify-center flex-col items-center">
                     <h1 className="text-sm text-center mt-14">Don't Have an Account</h1>
                     <button onClick={(e)=>{

@@ -56,27 +56,27 @@ function Slidercomp() {
 
 
 
-            <div id="default-carousel" data-carousel="slide" class="relative">
+            <div id="indicators-carousel" class="relative" data-carousel="static">
 
                 <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 lg:h-96 xl:h-96 2xl:h-96">
 
-                    <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0" data-carousel-item="active">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
                         <img src={slidercomp} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
                     </div>
 
-                    <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full" data-carousel-item="">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src={slidercomp} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
                     </div>
 
-                    <div class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform" data-carousel-item="">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src={slidercomp} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
                     </div>
 
-                    <div class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform" data-carousel-item="">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src={slidercomp} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
                     </div>
 
-                    <div class="duration-1000 ease-in-out absolute inset-0 transition-all transform -translate-x-full" data-carousel-item="">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src={slidercomp} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
                     </div>
                 </div>
@@ -89,7 +89,7 @@ function Slidercomp() {
                     <button type="button" class="w-3 h-3 rounded-full bg-black " aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
                 </div>
 
-                
+
             </div>
 
         </>

@@ -17,7 +17,12 @@ function Addproduct() {
     const [category, changecategory] = useState('');
     const [subcategory, changesubcategory] = useState('');
     const [desc, changedesc] = useState('');
+    const [brand, changebrand] = useState('');
+    const [brandinfo, changebrandinfo] = useState('');
+    const [use, changeuse] = useState('');
+    const [features, changefeatures] = useState('');
     const [price, changeprice] = useState(0);
+    const [deliverydays, changedeliverydays] = useState(0);
     const upload = async (e) => {
         
         e.preventDefault();
@@ -114,6 +119,36 @@ function Addproduct() {
                     }} name="quantity" id="quantity" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
                     <label for="quantity" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Quantity</label>
                 </div>
+                <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" value={brand} onChange={(e) => {
+                        changebrand(e.target.value);
+                    }} name="brand" id="brand" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
+                    <label for="brand" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">brand</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" value={use} onChange={(e) => {
+                        changeuse(e.target.value);
+                    }} name="use" id="use" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
+                    <label for="use" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">use</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" value={features} onChange={(e) => {
+                        changefeatures(e.target.value);
+                    }} name="features" id="features" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
+                    <label for="features" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">features</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" value={deliverydays} onChange={(e) => {
+                        changedeliverydays(e.target.value);
+                    }} name="deliverydays" id="deliverydays" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
+                    <label for="deliverydays" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">deliverydays</label>
+                </div>
+                <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" value={brandinfo} onChange={(e) => {
+                        changebrandinfo(e.target.value);
+                    }} name="brandinfo" id="brandinfo" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-gray-300 peer" placeholder=" " required="" />
+                    <label for="brandinfo" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">brandinfo</label>
+                </div>
                 <div className="flex flex-col w-full justify-center items-center">
                     <div className="mb-10">
                         <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
@@ -136,7 +171,14 @@ function Addproduct() {
                             "actual_price": actual_price,
                             "quantity": quantity,
                             "desc": desc,
-                            "photos": JSON.stringify(imagearray)
+                            "photos": JSON.stringify(imagearray),
+                            "reviews":null,
+                            "product_use":use,
+                            "special_features":features,
+                            "brand":brand,
+                            "delivery_days":deliverydays,
+                            "about_brand":brandinfo,
+                            
                         }, {
                             headers: {
                                 Authorization:

@@ -7,6 +7,7 @@ import axios from "axios";
 import Addproduct from "./Admin_comps/Addproduct";
 import Products from "./Admin_comps/Products";
 import LoadingBar from "react-top-loading-bar";
+import Addcat from "./Admin_comps/Addcat";
 
 async function fetchproducts() {
     var prods;
@@ -73,10 +74,16 @@ function Admin_panel() {
                         }}> 
                             <h1 className="text-black font-medium">homepagecomps</h1>
                         </li>
+                        <li className="px-4 py-3 cursor-pointer" onClick={()=>{
+                            changecomp("addcategory");
+                            // console.log(comp);
+                        }}> 
+                            <h1 className="text-black font-medium">Add remaining</h1>
+                        </li>
                     </ul>
                 </div>
             </nav>
-            {comp=="addproduct"?<Addproduct/>:comp=="products"?<Products products={products} />:
+            {comp=="addproduct"?<Addproduct/>:comp=="products"?<Products products={products} />:comp=="addcategory"?<Addcat />:
             <div className="w-full flex-col py-10 h-full flex justify-center items-center">
                 <button  className="my-4" onClick={(e)=>{
                     e.preventDefault();

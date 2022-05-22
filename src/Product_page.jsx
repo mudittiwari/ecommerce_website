@@ -8,31 +8,47 @@ import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 function Product_page() {
-    const navigate=useNavigate()
-    const {state}=useLocation();
-    const [wishlist,changewishlist]=useState([]);
-    const [cart,changecart]=useState([]);
-    const [data,changedata]=useState(state);
-    const ref=useRef(null);
+    const [related_prods,changerelatedprods]=useState([]);
+    const [related_prodskey,changerelatedprodskey]=useState(Math.random());
+    const navigate = useNavigate();
+    const { state } = useLocation();
+    const [wishlist, changewishlist] = useState([]);
+    const [cart, changecart] = useState([]);
+    const [data, changedata] = useState(state);
+    const ref = useRef(null);
     // if(data.wishlist)
     // {
     //     changewishlist(data.wishlist);
     // }
-    useEffect(()=>{
-        if(JSON.parse(localStorage.getItem('user')).wishlist)
-        {
+    useEffect(async() => {
+        if (JSON.parse(localStorage.getItem('user')).wishlist) {
             changewishlist(JSON.parse(JSON.parse(localStorage.getItem('user')).wishlist))
         }
-        if(JSON.parse(localStorage.getItem('user')).cart)
-        {
+        if (JSON.parse(localStorage.getItem('user')).cart) {
             changecart(JSON.parse(JSON.parse(localStorage.getItem('user')).cart))
         }
-    },[]);
+        await axios.get("https://infinite-falls-68793.herokuapp.com/products").then((res) => {
+            let arr=res.data;
+            let temp_arr=[];
+            for(let i=0;i<arr.length;i++)
+            {
+                if(arr[i].category_name==data.category_name && arr[i].id!=data.id)
+                    temp_arr.push(arr[i]);
+            }
+            changerelatedprods(temp_arr);
+            changerelatedprodskey(Math.random());
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [data]);
     // console.log(data);
     return (
         <>
-        <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
+            <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
             <div className='w-full flex flex-col my-6'>
                 <div className='flex justify-center w-100'>
                     <img src={logo} height="200px" width="200px" alt="" />
@@ -47,71 +63,69 @@ function Product_page() {
                         <h1 className='text-xl mt-5'>Rs. {data.price}</h1>
                         <div className='flex '><h1 className='text-sm'>Delivery Days:</h1><h1 className='ml-1 text-sm'>{data.delivery_days}</h1></div>
                         <div className='w-3/4 flex justify-around mt-5'>
-                            <button onClick={async(e)=>{
+                            <button onClick={async (e) => {
                                 e.preventDefault();
-                                if(!localStorage.getItem('user'))
-                                {
+                                if (!localStorage.getItem('user')) {
                                     navigate("/login");
                                     return;
                                 }
                                 ref.current.continuousStart(0);
-                                let new_wishlist=[];
+                                let new_wishlist = [];
                                 new_wishlist.push(...wishlist);
                                 new_wishlist.push(data.id);
                                 changewishlist(new_wishlist);
                                 console.log(wishlist);
-                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`, 
-                            {
-                                "wishlist":JSON.stringify(new_wishlist)
-                            },
-                            {
-                                headers: {
-                                    Authorization:
-                                        `Bearer ${localStorage.getItem('jwt')}`,
-                                },
-                            }).then((res) => {
-                                console.log(res.data);
-                                
-                                localStorage.setItem('user',JSON.stringify(res.data));
-                                // ref.current.complete();
-                            }).catch((err) => {
-                                console.log(err);
-                                // ref.current.complete();
-                            })
-                            ref.current.complete();
+                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
+                                    {
+                                        "wishlist": JSON.stringify(new_wishlist)
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization:
+                                                `Bearer ${localStorage.getItem('jwt')}`,
+                                        },
+                                    }).then((res) => {
+                                        console.log(res.data);
+
+                                        localStorage.setItem('user', JSON.stringify(res.data));
+                                        // ref.current.complete();
+                                    }).catch((err) => {
+                                        console.log(err);
+                                        // ref.current.complete();
+                                    })
+                                ref.current.complete();
                             }} className='px-8 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Wishlist</button>
-                            <button onClick={async(e)=>{
+                            <button onClick={async (e) => {
                                 e.preventDefault();
-                                if(!localStorage.getItem('user'))
-                                {
+                                if (!localStorage.getItem('user')) {
                                     navigate("/login");
                                     return;
                                 }
                                 ref.current.continuousStart(0);
-                                let new_cart=[];
+                                let new_cart = [];
                                 new_cart.push(...cart);
                                 new_cart.push(data.id);
                                 changecart(new_cart);
                                 // console.log(new_cart);
-                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`, 
-                            {
-                                "cart":JSON.stringify(new_cart)
-                            },
-                            {
-                                headers: {
-                                    Authorization:
-                                        `Bearer ${localStorage.getItem('jwt')}`,
-                                },
-                            }).then((res) => {
-                                console.log(res.data);
-                                
-                                localStorage.setItem('user',JSON.stringify(res.data));
-                                // ref.current.complete();
-                            }).catch((err) => {
-                                console.log(err);
-                                // ref.current.complete();
-                            })
-                            ref.current.complete();
+                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
+                                    {
+                                        "cart": JSON.stringify(new_cart)
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization:
+                                                `Bearer ${localStorage.getItem('jwt')}`,
+                                        },
+                                    }).then((res) => {
+                                        console.log(res.data);
+
+                                        localStorage.setItem('user', JSON.stringify(res.data));
+                                        // ref.current.complete();
+                                    }).catch((err) => {
+                                        console.log(err);
+                                        // ref.current.complete();
+                                    })
+                                ref.current.complete();
                             }} className='px-8 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Cart</button>
                         </div>
                         <div className='mt-7'>
@@ -211,11 +225,25 @@ function Product_page() {
 
                 <div className='w-full px-10 mt-12'>
                     <h1 className='text-xl mb-5 text-center'>Related Products</h1>
-                    <div className='w-full flex'>
-                        <Product_page_comp border="yes" />
-                        <Product_page_comp border="yes" />
-                        <Product_page_comp border="yes" />
-                        <Product_page_comp border="no" />
+                    <div className='w-full flex justify-center'>
+                        <OwlCarousel key={related_prodskey} items={4} className="owl-theme" margin={40} autoplay={true}>
+
+                            {related_prods.map((element, index) => {
+                                // console.log(element.id);
+                                return <div key={index} onClick={(e) => {
+                                    // console.log("mudit tiwari");
+                                    e.preventDefault();
+                                    changedata(element);
+
+                                }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                    <img className="w-4/5" src={JSON.parse(element.photos)[0]} alt="" />
+                                    <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                    <h6 className='text-black text-center'>{element.brand}</h6>
+                                    <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                </div>
+                            })}
+
+                        </OwlCarousel>
                     </div>
                 </div>
             </div>
