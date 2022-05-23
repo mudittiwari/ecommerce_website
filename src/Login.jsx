@@ -56,7 +56,7 @@ function Login() {
                         else
                         {
                             ref.current.continuousStart(0);
-                            await axios.post("http://localhost:1337/auth/forgot-password",{
+                            await axios.post("https://infinite-falls-68793.herokuapp.com/auth/forgot-password",{
                                 "email":email
                             }).then((res)=>{
                                 console.log(res);

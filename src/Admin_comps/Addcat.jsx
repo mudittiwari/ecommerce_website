@@ -7,7 +7,7 @@ function Addcat() {
     const [brands, changebrands] = useState([]);
     const [categories, changecategories] = useState([]);
     useEffect(async () => {
-        await axios.get(`http://localhost:1337/category`, {
+        await axios.get(`https://infinite-falls-68793.herokuapp.com/category`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -17,7 +17,7 @@ function Addcat() {
         }).catch((err) => {
             console.log(err);
         });
-        await axios.get(`http://localhost:1337/brand`, {
+        await axios.get(`https://infinite-falls-68793.herokuapp.com/brand`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -42,7 +42,7 @@ function Addcat() {
                         let temp_arr = [];
                         temp_arr.push(...categories);
                         temp_arr.push(category);
-                        await axios.put(`http://localhost:1337/category`, {
+                        await axios.put(`https://infinite-falls-68793.herokuapp.com/category`, {
                             "categories":JSON.stringify(temp_arr)
                         },{
                             headers: {
@@ -66,7 +66,7 @@ function Addcat() {
                         let temp_arr = [];
                         temp_arr.push(...brands);
                         temp_arr.push(brand);
-                        await axios.put(`http://localhost:1337/brand`, {
+                        await axios.put(`https://infinite-falls-68793.herokuapp.com/brand`, {
                             "brands":JSON.stringify(temp_arr)
                         },{
                             headers: {

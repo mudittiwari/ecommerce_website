@@ -2,7 +2,7 @@ import React from 'react';
 import Homepage from './Homepage';
 import Navbar from './Navbar';
 import Footermain from './Footermain';
-import { BrowserRouter,Route,Routes } from 'react-router-dom';
+import { BrowserRouter,HashRouter,Route,Routes } from 'react-router-dom';
 import Products from './Products';
 import Product_page from './Product_page';
 import Login from './Login';
@@ -24,7 +24,7 @@ function App()
 {
     return( 
     <>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route exact path="/" element={<Homepage/>}/>
                 
@@ -47,7 +47,7 @@ function App()
                 <Route exact path="/Admin_dashboard/products/homepagecomp" element={<Homepagecomp/>}/>
             </Routes>
             <Footermain/>
-        </BrowserRouter>
+        </HashRouter>
     </>
     );
 }

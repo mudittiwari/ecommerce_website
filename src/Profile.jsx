@@ -124,7 +124,7 @@ function Resest_password() {
                 <button className="w-56 py-2 px-2 rounded bg-white text-black font-semibold" onClick={async(e) => {
                     e.preventDefault();
                     ref.current.continuousStart(0);
-                    await axios.post("http://localhost:1337/auth/forgot-password", {
+                    await axios.post("https://infinite-falls-68793.herokuapp.com/auth/forgot-password", {
                         "email": JSON.parse(localStorage.getItem('user')).email
                     }).then((res) => {
                         console.log(res);

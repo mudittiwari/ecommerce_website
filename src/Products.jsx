@@ -132,7 +132,7 @@ function Products() {
         }).catch((err) => {
             console.log(err);
         });
-        await axios.get(`http://localhost:1337/category`, {
+        await axios.get(`https://infinite-falls-68793.herokuapp.com/category`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -152,7 +152,7 @@ function Products() {
         }).catch((err) => {
             console.log(err);
         });
-        await axios.get(`http://localhost:1337/brand`, {
+        await axios.get(`https://infinite-falls-68793.herokuapp.com/brand`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
