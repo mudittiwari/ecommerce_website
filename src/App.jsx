@@ -24,7 +24,7 @@ function App()
 {
     return( 
     <>
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Routes>
                 <Route exact path="/" element={<Homepage/>}/>
                 
