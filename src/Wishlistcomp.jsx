@@ -14,9 +14,9 @@ function Wishlistcomp(props) {
     }, []);
     return (
         <>
-            <div key={props.key}>
+            <div className="sm:w-max md:w-max lg:w-max xl:w-max 2xl:w-max w-2/5 mx-5" key={props.key}>
                 <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-                <div className="p-6 w-max mx-6" style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }}>
+                <div className="p-6 w-full" style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }}>
                     <img src={JSON.parse(props.data.photos)[0]} style={{'height':"200px",'width':'200px'}} alt="" />
                     <h1 className="text-black text-center font-bold">{props.data.product_name}</h1>
                     <h1 className="text-black text-center text-xs">{props.data.brand}</h1>

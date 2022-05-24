@@ -5,10 +5,10 @@ import homepagefirstcomp from './assets/homepagefirstcomp.png';
 function Notifications() {
     return (
         <>
-            <div className="w-full flex flex-col px-10">
-                <div className='flex justify-center my-5'>
+            <div className="w-full flex flex-col md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4">
+                {/* <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
-                </div>
+                </div> */}
                 <h1 className="text-lg font-bold">Notifications</h1>
                 <p className="text-xs my-8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur labore dolores iure, porro alias vero voluptate dolorem inventore, quisquam, est possimus consequatur officia excepturi eum eligendi accusantium praesentium voluptatibus! Placeat voluptatibus accusantium aliquid non eum explicabo minus ad possimus doloremque Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis vero error nihil voluptatum ipsum rerum magnam pariatur alias exercitationem minima consectetur accusantium repellendus, voluptatibus ipsam veritatis ab, sunt aliquid laboriosam delectus autem veniam facere debitis. Debitis veritatis dolores eaque quasi.</p>
                 <div className="flex justify-around w-full">

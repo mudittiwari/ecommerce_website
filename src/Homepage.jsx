@@ -118,8 +118,10 @@ function Homepage() {
     return (
         <>
             <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-            <Navbar />
-            <div className='w-full flex flex-col my-6'>
+            <div className='flex justify-center'>
+                <input type="text" placeholder='Search' className='md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 w-3/4 my-6 rounded-3xl' style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }} />
+            </div>
+            <div className='w-full flex flex-col mb-6 mt-0'>
                 <div>
 
                     <div id="default-carousel" data-carousel="slide" class="relative">
@@ -195,17 +197,17 @@ function Homepage() {
 
                 <div className='my-6 py-6 text-center bg-white'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex justify-around'>
-                        <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" margin={40} autoplay={true}>
+                    <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                        <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
 
                             {sectionthree.map((element, index) => {
                                 // console.log(element.id);
-                                return <div onClick={(e)=>{
+                                return <div onClick={(e) => {
                                     e.preventDefault();
-                                    navigate("/product_page",{state:element});
-                    
+                                    navigate("/product_page", { state: element });
+
                                 }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                    <img className="w-4/5" src={JSON.parse(element.photos)[0]} alt="" />
+                                    <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
                                     <h6 className='font-bold text-black'>{element.product_name}</h6>
                                     <h6 className='text-black text-center'>{element.brand}</h6>
                                     <h6 className='text-black text-center'>Rs {element.price}</h6>
@@ -215,12 +217,56 @@ function Homepage() {
                         </OwlCarousel>
 
                     </div>
+                    <div className='hidden sm:hidden md:hidden xl:block 2xl:block'>
+                        <div className='flex justify-around'>
+                            <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
+
+                                {sectionthree.map((element, index) => {
+                                    // console.log(element.id);
+                                    return <div onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate("/product_page", { state: element });
+
+                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                        <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                        <h6 className='text-black text-center'>{element.brand}</h6>
+                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                    </div>
+                                })}
+
+                            </OwlCarousel>
+
+                        </div>
+                    </div>
+                    <div className='hidden sm:block md:block'>
+                        <div className='flex justify-around'>
+                            <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
+
+                                {sectionthree.map((element, index) => {
+                                    // console.log(element.id);
+                                    return <div onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate("/product_page", { state: element });
+
+                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                        <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                        <h6 className='text-black text-center'>{element.brand}</h6>
+                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                    </div>
+                                })}
+
+                            </OwlCarousel>
+
+                        </div>
+                    </div>
                 </div>
 
                 <div className='my-6 text-center'>
                     <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
                     <div className='flex flex-wrap justify-center'>
-                    {sectionfour.map((element, index) => {
+                        {sectionfour.map((element, index) => {
                             return <Thirdcomp data={element} />
                         })}
                     </div>

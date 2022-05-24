@@ -11,20 +11,31 @@ import LoadingBar from 'react-top-loading-bar';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { makeStyles } from '@material-ui/styles';
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
+import ExpandMoreIcon from '../node_modules/@material-ui/icons/ExpandMore';
 function Product_page() {
-    const [related_prods,changerelatedprods]=useState([]);
-    const [related_prodskey,changerelatedprodskey]=useState(Math.random());
+    const [related_prods, changerelatedprods] = useState([]);
+    const [related_prodskey, changerelatedprodskey] = useState(Math.random());
     const navigate = useNavigate();
     const { state } = useLocation();
     const [wishlist, changewishlist] = useState([]);
     const [cart, changecart] = useState([]);
     const [data, changedata] = useState(state);
     const ref = useRef(null);
+    const useStyles = makeStyles({
+        summary: {
+          backgroundColor: 'black',
+          color:'white'
+        },
+    }
+      );
+      const classes=useStyles();
     // if(data.wishlist)
     // {
     //     changewishlist(data.wishlist);
     // }
-    useEffect(async() => {
+    useEffect(async () => {
         if (JSON.parse(localStorage.getItem('user')).wishlist) {
             changewishlist(JSON.parse(JSON.parse(localStorage.getItem('user')).wishlist))
         }
@@ -32,11 +43,10 @@ function Product_page() {
             changecart(JSON.parse(JSON.parse(localStorage.getItem('user')).cart))
         }
         await axios.get("https://infinite-falls-68793.herokuapp.com/products").then((res) => {
-            let arr=res.data;
-            let temp_arr=[];
-            for(let i=0;i<arr.length;i++)
-            {
-                if(arr[i].category_name==data.category_name && arr[i].id!=data.id)
+            let arr = res.data;
+            let temp_arr = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].category_name == data.category_name && arr[i].id != data.id)
                     temp_arr.push(arr[i]);
             }
             changerelatedprods(temp_arr);
@@ -50,19 +60,20 @@ function Product_page() {
         <>
             <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
             <div className='w-full flex flex-col my-6'>
-                <div className='flex justify-center w-100'>
+                {/* <div className='flex justify-center w-100'>
                     <img src={logo} height="200px" width="200px" alt="" />
-                </div>
-                <div className='w-full flex justify-evenly mt-10'>
-                    <div className='w-2/5'>
-                        <img src={JSON.parse(data.photos)[0]} width="300px" alt="" />
+                </div> */}
+                <div className='w-full md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col flex justify-evenly mt-10'>
+                    <div className='md:w-2/5 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full'>
+                        <img className='hidden md:block lg:block xl:block 2xl:block' src={JSON.parse(data.photos)[0]} width="300px" alt="" />
+                        <img className='w-full block md:hidden lg:hidden xl:hidden 2xl:hidden' src={JSON.parse(data.photos)[0]} alt="" />
                     </div>
-                    <div className='w-2/5 pt-5 '>
+                    <div className='md:w-2/5 md:px-0 lg:px-0 xl:px-0 2xl:px-0 px-4 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full pt-5 '>
                         <h1 className='text-2xl'>{data.product_name}</h1>
                         <h1>{data.brand}</h1>
                         <h1 className='text-xl mt-5'>Rs. {data.price}</h1>
                         <div className='flex '><h1 className='text-sm'>Delivery Days:</h1><h1 className='ml-1 text-sm'>{data.delivery_days}</h1></div>
-                        <div className='w-3/4 flex justify-around mt-5'>
+                        <div className='w-3/4 mx-auto md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0 flex md:justify-around lg:justify-around xl:justify-around 2xl:justify-around justify-center mt-5'>
                             <button onClick={async (e) => {
                                 e.preventDefault();
                                 if (!localStorage.getItem('user')) {
@@ -94,7 +105,7 @@ function Product_page() {
                                         // ref.current.complete();
                                     })
                                 ref.current.complete();
-                            }} className='px-8 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Wishlist</button>
+                            }} className='px-8 mx-3 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Wishlist</button>
                             <button onClick={async (e) => {
                                 e.preventDefault();
                                 if (!localStorage.getItem('user')) {
@@ -126,15 +137,15 @@ function Product_page() {
                                         // ref.current.complete();
                                     })
                                 ref.current.complete();
-                            }} className='px-8 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Cart</button>
+                            }} className='px-8 mx-3 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Cart</button>
                         </div>
                         <div className='mt-7'>
                             <h1 className='text-lg mb-2'>Product Details</h1>
-                            <p className='text-xs'>{data.desc}</p>
+                            <p className='text-xs break-words'>{data.desc}</p>
                         </div>
                     </div>
                 </div>
-                <div className='w-full flex px-10 my-6 flex-col'>
+                <div className='w-full flex md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 my-6 flex-col'>
                     <div className='my-5'>
                         <h1 className='text-xl mb-3'>Product Use</h1>
                         <p className='text-xs'>{data.product_use}</p>
@@ -149,7 +160,7 @@ function Product_page() {
                     </div>
                 </div>
 
-                <div className='w-full px-10'>
+                <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4'>
                     <h1 className='text-xl mb-3'>Rating & Review</h1>
                     <div className='flex w-full my-5'>
                         <div className='w-20 h-20 bg-white rounded-lg'>mudittiwrai</div>
@@ -167,45 +178,50 @@ function Product_page() {
                 </div>
 
 
-                <div className='w-full px-10 mt-6'>
+                <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-6'>
                     <h1 className='text-xl mb-5'>FAQ</h1>
 
 
-                    <div id="accordion-collapse" data-accordion="collapse">
-                        <h2 id="accordion-collapse-heading-1">
-                            <button type="button" className="flex justify-between items-center p-5 w-full font-medium text-left text-white border border-b-0 border-gray-200" style={{ 'backgroundColor': 'black' }} data-accordion-target="#accordion-collapse-body-1" aria-expanded="false" aria-controls="accordion-collapse-body-1">
-                                <span className='text-white'>what is this website</span>
-                                <svg data-accordion-icon="" className="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            </button>
-                        </h2>
-                        <div id="accordion-collapse-body-1" className="hidden" aria-labelledby="accordion-collapse-heading-1">
-                            <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700" style={{ 'transition': '1s' }}>
-                                <p className="mb-2 text-white text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium doloribus ab blanditiis. Quia tenetur, enim nesciunt, voluptates quaerat ratione quidem asperiores ea error praesentium, maiores aperiam in qui veniam. Quas?</p>
-                            </div>
-                        </div>
-                        <h2 id="accordion-collapse-heading-2">
-                            <button type="button" className="flex justify-between items-center p-5 w-full font-medium text-left text-white border border-b-0 border-gray-200" style={{ 'backgroundColor': 'black' }} data-accordion-target="#accordion-collapse-body-2" aria-expanded="false" aria-controls="accordion-collapse-body-2">
-                                <span className='text-white'>what is this website</span>
-                                <svg data-accordion-icon="" className="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            </button>
-                        </h2>
-                        <div id="accordion-collapse-body-2" className="hidden" aria-labelledby="accordion-collapse-heading-2">
-                            <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                <p className="mb-2 text-white text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium doloribus ab blanditiis. Quia tenetur, enim nesciunt, voluptates quaerat ratione quidem asperiores ea error praesentium, maiores aperiam in qui veniam. Quas?</p>
-                            </div>
-                        </div>
-
-                    </div>
-
+                    <Accordion>
+                        <AccordionSummary className={classes.summary}
+                            expandIcon={<ExpandMoreIcon className={classes.summary} />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >FAQ ONE</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails className={classes.summary}>
+                            <Typography>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                                malesuada lacus ex, sit amet blandit leo lobortis eget.
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary className={classes.summary}
+                            expandIcon={<ExpandMoreIcon className={classes.summary} />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >FAQ TWO</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails className={classes.summary}>
+                            <Typography>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                                malesuada lacus ex, sit amet blandit leo lobortis eget.
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                   
 
                 </div>
 
 
-                <div className='w-full px-10 mt-10'>
+                <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-10'>
                     <h1 className='text-xl mb-3'>Payment Method Available</h1>
                     <h1 className='text-xs mb-3'>Cash On Delivery</h1>
                 </div>
-                <div className='w-full px-10 mt-7'>
+                <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-7'>
                     <h1 className='text-xl mb-5'>Services</h1>
                     <div className='flex w-full justify-around'>
                         <div className='flex w-1/3 flex-col items-center justify-center'>
@@ -223,20 +239,19 @@ function Product_page() {
                     </div>
                 </div>
 
-                <div className='w-full px-10 mt-12'>
+                <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-12'>
                     <h1 className='text-xl mb-5 text-center'>Related Products</h1>
-                    <div className='w-full flex justify-center'>
-                        <OwlCarousel key={related_prodskey} items={4} className="owl-theme" margin={40} autoplay={true}>
+                    <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                        <OwlCarousel key={related_prodskey} items={2} margin={20} className="owl-theme" autoplay={true}>
 
                             {related_prods.map((element, index) => {
                                 // console.log(element.id);
-                                return <div key={index} onClick={(e) => {
-                                    // console.log("mudit tiwari");
+                                return <div onClick={(e) => {
                                     e.preventDefault();
-                                    changedata(element);
+                                    navigate("/product_page", { state: element });
 
                                 }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                    <img className="w-4/5" src={JSON.parse(element.photos)[0]} alt="" />
+                                    <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
                                     <h6 className='font-bold text-black'>{element.product_name}</h6>
                                     <h6 className='text-black text-center'>{element.brand}</h6>
                                     <h6 className='text-black text-center'>Rs {element.price}</h6>
@@ -244,6 +259,51 @@ function Product_page() {
                             })}
 
                         </OwlCarousel>
+
+                    </div>
+                    <div className='hidden sm:hidden md:hidden xl:block 2xl:block'>
+                        <div className='flex justify-around'>
+                            <OwlCarousel key={related_prodskey} margin={20} items={4} className="owl-theme" autoplay={true}>
+
+                                {related_prods.map((element, index) => {
+                                    // console.log(element.id);
+                                    return <div onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate("/product_page", { state: element });
+
+                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                        <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                        <h6 className='text-black text-center'>{element.brand}</h6>
+                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                    </div>
+                                })}
+
+                            </OwlCarousel>
+
+                        </div>
+                    </div>
+                    <div className='hidden sm:block md:block'>
+                        <div className='flex justify-around'>
+                            <OwlCarousel key={related_prodskey} margin={20} items={3} className="owl-theme" autoplay={true}>
+
+                                {related_prods.map((element, index) => {
+                                    // console.log(element.id);
+                                    return <div onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate("/product_page", { state: element });
+
+                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                        <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                        <h6 className='text-black text-center'>{element.brand}</h6>
+                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                    </div>
+                                })}
+
+                            </OwlCarousel>
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -25,6 +25,7 @@ function App()
     return( 
     <>
         <HashRouter>
+        <Navbar />
             <Routes>
                 <Route exact path="/" element={<Homepage/>}/>
                 

@@ -30,12 +30,12 @@ function Wishlist() {
         <>
             <div className="w-100 mt-5 mb-24">
                 <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-                <div className='flex justify-center my-5'>
+                {/* <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
-                </div>
+                </div> */}
                 <h1 className='font-bold text-2xl mx-6' style={{ 'color': '#FF007A' }}>Wishlist</h1>
                 <h1 className='text-lg mb-6 mx-6'>{wishlist.length} Items</h1>
-                <div className="flex flex-wrap px-6 justify-center">
+                <div className="flex flex-wrap justify-center">
                     {wishlist.map((element, index) => {
                         // console.log(element);
                         return <Wishlistcomp key={index} data={element} />

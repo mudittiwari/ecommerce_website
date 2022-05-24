@@ -1,12 +1,148 @@
 
 import { useEffect, useRef, useState } from 'react';
 import logo from '../src/assets/logo.png';
+import * as React from 'react';
+import { List } from '@material-ui/core';
 import homepagefirstcomp from './assets/homepagefirstcomp.png';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
+import { Drawer } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { ListItemText, ListItem, Box } from '@material-ui/core';
+// import '../node_modules/@material-ui/core/Drawer'
+
 function Products() {
-    const ref=useRef(null);
+    const [state, setState] = useState({
+        // top: false,
+        left: false,
+        // bottom: false,
+        // right: false,
+    });
+    const list = (anchor) => (
+        <Box className='bg-black'
+            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            role="presentation"
+
+        >
+            <div className='flex flex-col text-white'>
+                <h1 className='text-xl text-center border-2 border-white py-2'>Filter</h1>
+                <div onChange={(e) => {
+                    changefilter(e.target.value);
+                }} className='border-2 border-t-0 border-white py-5'>
+
+                    <div className='my-1'><input type="radio" className='mx-4 bg-transparent' name="filter" id="" placeholder='' style={{ 'border': '1px solid white' }} value="lth" />Price low to high</div>
+                    <div className='my-1'><input type="radio" className='mx-4 bg-transparent' name="filter" id="" placeholder='' style={{ 'border': '1px solid white' }} value="htl" />Price high to low</div>
+                    <div className='my-1'><input type="radio" className='mx-4 bg-transparent' name="filter" id="" placeholder='' style={{ 'border': '1px solid white' }} value="new" />Newest</div>
+                </div>
+                <div className='border-2 border-t-0 border-white py-2'>
+                    <h1 className='text-xl text-center mb-2'>Categories</h1>
+                    {categories.map((element, index) => {
+                        return <div key={index} className='my-1'><input key={key[index]} type="checkbox" checked={temp_cat[index]} onChange={(e) => {
+                            e.preventDefault();
+                            let temp = [];
+                            let temp_key = [];
+
+                            temp_key.push(...key);
+                            temp.push(...temp_cat);
+                            temp[index] = !temp[index];
+                            temp_key[index] = Math.random();
+                            changetempcat(temp);
+                            changekey(temp_key);
+
+                        }} className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />{element}</div>
+                    })}
+
+
+                </div>
+                <div className='border-2 border-t-0 border-white py-2 h-full'>
+                    <h1 className='text-xl text-center mb-2'>Brand</h1>
+                    {brands.map((element, index) => {
+                        return <div key={index} className='my-1'><input checked={temp_brand[index]} key={key_brand[index]} onChange={(e) => {
+                            e.preventDefault();
+                            let temp = [];
+                            let temp_key = [];
+                            temp_key.push(...key_brand);
+                            temp.push(...temp_brand);
+                            temp[index] = !temp[index];
+                            temp_key[index] = Math.random();
+                            changetempbrand(temp);
+                            changekeybrand(temp_key);
+                            // console.log(temp_cat);
+                        }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />{element}</div>
+                    })}
+                </div>
+                <div className='border-2 border-t-0 border-white py-2 h-full'>
+                    <h1 className='text-xl text-center mb-2'>Price</h1>
+                    <div className='my-1'><input checked={temp_price[0]} key={price_key[0]} onChange={(e) => {
+                        let index = 0;
+                        e.preventDefault();
+                        let temp = [];
+                        let temp_key = [];
+                        temp_key.push(...price_key);
+                        temp.push(...temp_price);
+                        temp[index] = !temp[index];
+                        temp_key[index] = Math.random();
+                        changetempprice(temp);
+                        changepricekey(temp_key);
+                    }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />Under Rs. 500</div>
+                    <div className='my-1'><input checked={temp_price[1]} key={price_key[1]} onChange={(e) => {
+                        let index = 1;
+                        e.preventDefault();
+                        let temp = [];
+                        let temp_key = [];
+                        temp_key.push(...price_key);
+                        temp.push(...temp_price);
+                        temp[index] = !temp[index];
+                        temp_key[index] = Math.random();
+                        changetempprice(temp);
+                        changepricekey(temp_key);
+                    }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />Under Rs. 1000</div>
+                    <div className='my-1'><input checked={temp_price[2]} key={price_key[2]} onChange={(e) => {
+                        e.preventDefault();
+                        let temp = [];
+                        let index = 2;
+                        let temp_key = [];
+                        temp_key.push(...price_key);
+                        temp.push(...temp_price);
+                        temp[index] = !temp[index];
+                        temp_key[index] = Math.random();
+                        changetempprice(temp);
+                        changepricekey(temp_key);
+                    }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />Under Rs. 1500</div>
+                    <div className='my-1'><input checked={temp_price[3]} key={price_key[3]} onChange={(e) => {
+                        e.preventDefault();
+                        let temp = [];
+                        let index = 3;
+                        let temp_key = [];
+                        temp_key.push(...price_key);
+                        temp.push(...temp_price);
+                        temp[index] = !temp[index];
+                        temp_key[index] = Math.random();
+                        changetempprice(temp);
+                        changepricekey(temp_key);
+                    }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />Above Rs. 1500</div>
+                </div>
+                <Box onClick={toggleDrawer(anchor,false)}>
+                    <button
+                        className="bg-pink-900 mx-auto mt-5 w-24 rounded border-0 px-4 mb-5 py-3 block" onClick={(e) => {
+                            e.preventDefault();
+                            applyfilter();
+
+                        }} >Apply</button>
+                </Box>
+            </div>
+        </Box>
+    );
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
+    const ref = useRef(null);
     const [filter, changefilter] = useState();
     const [filtered, changefiltered] = useState(false);
     const [key, changekey] = useState([]);
@@ -89,7 +225,7 @@ function Products() {
                             break;
                         }
                     }
-                    if(i==arr.length)
+                    if (i == arr.length)
                         arr.splice(i, 0, element);
                 }
             }
@@ -111,7 +247,7 @@ function Products() {
                             break;
                         }
                     }
-                    if(i==arr.length)
+                    if (i == arr.length)
                         arr.splice(i, 0, element);
                 }
                 console.log(arr);
@@ -184,13 +320,26 @@ function Products() {
     return (
         <>
             <div className='w-full flex flex-col my-6'>
-            <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-                <div className='flex justify-center'>
+                <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+                {/* <div className='flex justify-center'>
                     <img src={logo} height="200px" width="200px" alt="" />
-                </div>
-                <div className='flex'>
-                    <div className='w-1/4 mt-28'>
-                        <div className='flex flex-col'>
+                </div> */}
+                {['left'].map((anchor) => (
+                    <React.Fragment key={anchor}>
+                        {/* <Button className='text-white mx-5 text-left w-20' onClick={toggleDrawer(anchor, true)}>Filters</Button> */}
+                        <button className='text-white md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent' onClick={toggleDrawer(anchor, true)}>Filters</button>
+                        <Drawer className='bg-transparent '
+                            anchor={anchor}
+                            open={state[anchor]}
+                            onClose={toggleDrawer(anchor, false)}
+                        >
+                            {list(anchor)}
+                        </Drawer>
+                    </React.Fragment>
+                ))}
+                <div className='flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row'>
+                    <div className='md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 w-4/5 mt-10 mx-auto md:mt-28 lg:mt-28 xl:mt-28 2xl:mt-28'>
+                        <div className='flex-col md:flex lg:flex xl:flex 2xl:flex hidden'>
                             <h1 className='text-xl text-center border-2 border-white py-2'>Filter</h1>
                             <div onChange={(e) => {
                                 changefilter(e.target.value);
@@ -295,11 +444,11 @@ function Products() {
                                 }} >Apply</button>
                         </div>
                     </div>
-                    <div className='w-3/4 flex flex-col'>
-                        <h1 className='font-bold text-2xl mx-24 mt-10' style={{ 'color': '#FF007A' }}>Heading</h1>
-                        <div className='flex justify-around px-10 my-10 flex-wrap'>
+                    <div className='md:w-3/4 lg:w-3/4 xl:w-3/4 2xl:w-3/4 w-full flex flex-col'>
+                        <h1 className='font-bold text-2xl mx-24 md:mt-10 lg:mt-10 xl:mt-10 2xl:mt-10 mt-0 text-center' style={{ 'color': '#FF007A' }}>Heading</h1>
+                        <div className='flex justify-around md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-2 my-10 flex-wrap'>
                             {filtered ? filtered_prods.map((element, index) => {
-                                return <div className='w-2/6 h-max my-5 mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
+                                return <div className='md:w-2/6 lg:w-2/6 xl:w-2/6 2xl:w-2/6 w-2/5 h-max my-5 mx-2 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
                                     e.preventDefault();
                                     navigate("/product_page", { state: element });
 
@@ -310,7 +459,7 @@ function Products() {
                                     <h6 className='text-black text-center'>Rs {element.price}</h6>
                                 </div>
                             }) : products.map((element, index) => {
-                                return <div className='w-2/6 h-max my-5 mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
+                                return <div className='md:w-2/6 lg:w-2/6 xl:w-2/6 2xl:w-2/6 w-2/5 h-max my-5 mx-2 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
                                     e.preventDefault();
                                     navigate("/product_page", { state: element });
 
