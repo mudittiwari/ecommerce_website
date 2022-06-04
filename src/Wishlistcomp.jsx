@@ -10,7 +10,7 @@ function Wishlistcomp(props) {
         <>
             <div className="sm:w-max md:w-max lg:w-max xl:w-max 2xl:w-max w-2/5 mx-3 my-4 relative" key={props.key}>
                 <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-                <div className="p-6 w-full" style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }}>
+                <div className="p-6 w-full rounded-lg" style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }}>
                     <img src={JSON.parse(props.data.photos)[0]} style={{'height':"200px",'width':'200px'}} alt="" />
                     <h1 className="text-black text-center font-bold">{props.data.product_name}</h1>
                     <h1 className="text-black text-center text-xs">{props.data.brand}</h1>
@@ -54,7 +54,7 @@ function Wishlistcomp(props) {
                                     // ref.current.complete();
                                 })
                             ref.current.complete();
-                        }} className="px-4 py-1 bg-white text-black text-xs font-semibold">Add to Cart</button>
+                        }} className="px-4 py-1 bg-white text-black text-xs font-semibold rounded-md">Add to Cart</button>
                     </div>
                     <div className="bg-white cursor-pointer rounded-full w-max h-max m-1" style={{'position':'absolute','top':'5px','right':'5px'}}>
                                             <DeleteIcon className="text-black" onClick={async (e) => {

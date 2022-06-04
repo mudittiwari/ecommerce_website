@@ -338,7 +338,7 @@ function Products() {
         <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
             <Navbar />
             
-            <div className='w-full flex flex-col md:mt-5 sm:mt-5 lg:mt-5 xl:mt-5 2xl:mt-5 mt-0'>
+            <div className='w-full flex flex-col mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40'>
                 
                 
                 {/* <div className='flex justify-center'>

@@ -231,7 +231,7 @@ function Profile() {
     return (
         <>
         <Navbar />
-            <div className="w-full md:mt-5 sm:mt-5 lg:mt-5 xl:mt-5 2xl:mt-5 mt-0 flex md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col">
+            <div className="w-full mt-16 sm:mt-44 md:mt-44 lg:mt-44 xl:mt-44 2xl:mt-44 flex md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col">
                 
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>

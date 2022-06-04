@@ -24,6 +24,10 @@ input:focus
 {
   outline: none
 }
+.MuiBadge-badge
+{
+  margin:-6px
+}
 
 
 @tailwind base;

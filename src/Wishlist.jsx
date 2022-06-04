@@ -49,7 +49,7 @@ function Wishlist() {
                 {/* <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}
-                <h1 className='font-bold text-2xl mx-6 mt-10' style={{ 'color': '#FF007A' }}>Wishlist</h1>
+                <h1 className='font-bold text-2xl mx-6 mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40' style={{ 'color': '#FF007A' }}>Wishlist</h1>
                 <h1 className='text-lg mb-6 mx-6'>{wishlist.length} Items</h1>
                 <div className="flex flex-wrap justify-center">
                     {wishlist.map((element, index) => {

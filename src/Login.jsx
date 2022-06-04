@@ -30,7 +30,7 @@ function Login() {
                     <input value={password} onChange={(e)=>{
                         changepassword(e.target.value);
                     }} className="mt-10 rounded-xl w-72 py-1 text-black" type="password" placeholder="Password" />
-                    <button className="text-white text-lg font-semibold mt-5" onClick={async(e)=>{
+                    <button className="text-white text-base mt-5 px-10 py-1 rounded-md" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async(e)=>{
                         e.preventDefault();
                         ref.current.continuousStart(0);
                         await axios.post("https://infinite-falls-68793.herokuapp.com/auth/local/",{
@@ -54,7 +54,7 @@ function Login() {
                     }}>Continue</button>
                 </div>
                 <div className="flex justify-center mt-5 mb-5">
-                    <button className="text-xs" onClick={async(e)=>{
+                    <button className="text-white text-xs mt-2 px-10 py-1 rounded-md" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async(e)=>{
                         e.preventDefault();
                         if(!email)
                             alert("please enter a email");

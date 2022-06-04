@@ -15,6 +15,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Carousel from 'react-material-ui-carousel'
+import { Link } from 'react-router-dom';
 import Search from '../node_modules/@material-ui/icons/Search';
 function Homepage() {
     const ref = useRef(null);
@@ -132,7 +133,7 @@ function Homepage() {
                 <div>
                     <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
                     <Navbar />
-                    <div className='flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
+                    <div className='mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40 flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
                         <input value={search} onChange={(e) => {
                             changesearch(e.target.value);
                         }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
@@ -259,11 +260,11 @@ function Homepage() {
                             </div>
                         </div>
                     </div>
-                </div> :  localStorage.getItem('user') && !JSON.parse(localStorage.getItem('user')).confirmed ? <div className=' flex flex-col items-center justify-center h-screen'><h1 className='mx-auto mt-20 mb-10 w-max'>A email has been sent for email verification</h1><button className="px-6 py-1" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async (e) => {
+                </div> : localStorage.getItem('user') && !JSON.parse(localStorage.getItem('user')).confirmed ? <div className=' flex flex-col items-center justify-center h-screen'><h1 className='mx-auto mt-20 mb-10 w-max'>A email has been sent for email verification</h1><button className="px-6 py-1" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async (e) => {
 
                     e.preventDefault();
                     // ref.current.continuousStart(0);
-                    
+
                     await axios.post("https://infinite-falls-68793.herokuapp.com/auth/send-email-confirmation", {
                         "email": user.email
                     }).then((res) => {
@@ -279,83 +280,71 @@ function Homepage() {
                         console.log(err);
                     });
                 }}>Resend Email</button>  </div> : <div>
-                <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-                <Navbar />
-                <div className='flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
-                    <input value={search} onChange={(e) => {
-                        changesearch(e.target.value);
-                    }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
-                    <span onClick={(e) => {
-                        e.preventDefault();
-                        navigate('/products', { state: { 'prodname': search } })
-                    }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>
-                </div>
-                <div className='w-full flex flex-col mb-6 mt-0'>
-                    <div id='mainslider'>
-
-                        <Carousel navButtonsAlwaysVisible="true" indicators="false" animation='slide' duration="800">
-
-                            <Item />
-                            <Item />
-                            <Item />
-
-                        </Carousel>
-
-                    </div>
-                    <div className='my-6 text-center'>
-                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-
-
-                        {/* {sectionone.length} */}
-                        <div className='flex flex-wrap justify-center'>
-                            {sectionone.map((element, index) => {
-                                return <Firstcomp data={element} />
-
-
-                            })}
+                    <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+                    <Navbar />
+                    <div className='flex'>
+                        <div className='flex mx-2 justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
+                            <input value={search} onChange={(e) => {
+                                changesearch(e.target.value);
+                            }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
+                            <span onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/products', { state: { 'prodname': search } })
+                            }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>
                         </div>
+                        <ul className='flex flex-col w-full justify-center'>
+                            <li onClick={(e) => {
+                                e.preventDefault();
+                                document.body.style.overflow = "visible"
+                            }} className='my-1 text-center mx-4 nav_li capitalize'><Link to="/login">Login</Link></li>
+
+                        </ul>
                     </div>
+                    <div className='w-full flex flex-col mb-6 mt-0'>
+                        <div id='mainslider'>
 
-                    <div className='my-6'>
-                        <Slidercomp />
-                    </div>
+                            <Carousel navButtonsAlwaysVisible="true" indicators="false" animation='slide' duration="800">
 
+                                <Item />
+                                <Item />
+                                <Item />
 
+                            </Carousel>
 
-                    <div className='my-6 text-center'>
-                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                        <div className='flex flex-wrap justify-center'>
-                            {sectiontwo.map((element, index) => {
-                                return <Firstcomp data={element} />
-                            })}
                         </div>
-                    </div>
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
 
-                    <div className='my-6 py-6 text-center bg-white'>
-                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                        <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
-                            <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
 
-                                {sectionthree.map((element, index) => {
-                                    // console.log(element.id);
-                                    return <div onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate("/product_page", { state: element });
+                            {/* {sectionone.length} */}
+                            <div className='flex flex-wrap justify-center'>
+                                {sectionone.map((element, index) => {
+                                    return <Firstcomp data={element} />
 
-                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                        <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
-                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
-                                        <h6 className='text-black text-center'>{element.brand}</h6>
-                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
-                                    </div>
+
                                 })}
-
-                            </OwlCarousel>
-
+                            </div>
                         </div>
-                        <div className='hidden lg:block xl:block 2xl:block'>
-                            <div className='flex justify-around'>
-                                <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
+
+                        <div className='my-6'>
+                            <Slidercomp />
+                        </div>
+
+
+
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex flex-wrap justify-center'>
+                                {sectiontwo.map((element, index) => {
+                                    return <Firstcomp data={element} />
+                                })}
+                            </div>
+                        </div>
+
+                        <div className='my-6 py-6 text-center bg-white'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                                <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
 
                                     {sectionthree.map((element, index) => {
                                         // console.log(element.id);
@@ -363,7 +352,7 @@ function Homepage() {
                                             e.preventDefault();
                                             navigate("/product_page", { state: element });
 
-                                        }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                        }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
                                             <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
                                             <h6 className='font-bold text-black'>{element.product_name}</h6>
                                             <h6 className='text-black text-center'>{element.brand}</h6>
@@ -374,41 +363,62 @@ function Homepage() {
                                 </OwlCarousel>
 
                             </div>
+                            <div className='hidden lg:block xl:block 2xl:block'>
+                                <div className='flex justify-around'>
+                                    <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
+
+                                        {sectionthree.map((element, index) => {
+                                            // console.log(element.id);
+                                            return <div onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/product_page", { state: element });
+
+                                            }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                                <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                                <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                                <h6 className='text-black text-center'>{element.brand}</h6>
+                                                <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                            </div>
+                                        })}
+
+                                    </OwlCarousel>
+
+                                </div>
+                            </div>
+                            <div className='hidden sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
+                                <div className='flex justify-around'>
+                                    <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
+
+                                        {sectionthree.map((element, index) => {
+                                            // console.log(element.id);
+                                            return <div onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/product_page", { state: element });
+
+                                            }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                                <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                                <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                                <h6 className='text-black text-center'>{element.brand}</h6>
+                                                <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                            </div>
+                                        })}
+
+                                    </OwlCarousel>
+
+                                </div>
+                            </div>
                         </div>
-                        <div className='hidden sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
-                            <div className='flex justify-around'>
-                                <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
 
-                                    {sectionthree.map((element, index) => {
-                                        // console.log(element.id);
-                                        return <div onClick={(e) => {
-                                            e.preventDefault();
-                                            navigate("/product_page", { state: element });
-
-                                        }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                            <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
-                                            <h6 className='font-bold text-black'>{element.product_name}</h6>
-                                            <h6 className='text-black text-center'>{element.brand}</h6>
-                                            <h6 className='text-black text-center'>Rs {element.price}</h6>
-                                        </div>
-                                    })}
-
-                                </OwlCarousel>
-
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex flex-wrap justify-center'>
+                                {sectionfour.map((element, index) => {
+                                    return <Thirdcomp data={element} />
+                                })}
                             </div>
                         </div>
                     </div>
-
-                    <div className='my-6 text-center'>
-                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                        <div className='flex flex-wrap justify-center'>
-                            {sectionfour.map((element, index) => {
-                                return <Thirdcomp data={element} />
-                            })}
-                        </div>
-                    </div>
-                </div>
-            </div>}
+                </div>}
         </>
     );
 }

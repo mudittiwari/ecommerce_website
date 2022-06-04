@@ -95,7 +95,7 @@ function Cart() {
                 {/* <div className="w-full flex justify-center py-10 ">
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}
-                <div className="flex items-center w-full justify-center pt-0 pb-10 px-4 mt-10">
+                <div className="flex items-center w-full justify-center pt-0 pb-10 px-4 mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40">
                     <h1 className="text-white sm:text-sm text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-sm">Cart</h1>
                     <hr className="h-0 mx-5 w-32" />
                     <h1 className="text-white sm:text-sm text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-sm">Address</h1>
@@ -217,7 +217,7 @@ function Cart() {
 
 
 
-            <div className="w-full md:hidden lg:hidden xl:hidden 2xl:hidden block">
+            <div className="w-full md:hidden lg:hidden xl:hidden 2xl:hidden block mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40">
                 <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
                 <Navbar />
                 {/* <div className="w-full flex justify-center py-10 ">
@@ -321,8 +321,6 @@ function Cart() {
                                     </div>
                                 </div>
                             })}
-
-
                         </div>
                         <button className="w-full mt-10 bg-transparent rounded px-4 text-sm py-1 text-black border-black border-2 h-max ml-auto">Add More Products</button>
                     </div>

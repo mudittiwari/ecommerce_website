@@ -1,6 +1,7 @@
 import React from "react";
 import footer from '../src/assets/footer.png';
 import logocart from '../src/assets/logocart.png';
+import { Link } from "react-router-dom";
 function Footermain() {
     return (
         <>
@@ -22,18 +23,19 @@ function Footermain() {
                     <div className="w-1/4 h-full flex flex-col items-center px-5 py-4">
                         <h6 className="text-xl font-bold w-max my-2" style={{ 'color': '#FF007A' }}>Quick Links</h6>
                         <ul>
-                            <li className="text-sm text-black w-max my-2">Wishlist</li>
-                            <li className="text-sm text-black w-max my-2">Cart</li>
-                            <li className="text-sm text-black w-max my-2">Orders</li>
-                            <li className="text-sm text-black w-max my-2">Notifications</li>
-                            <li className="text-sm text-black w-max my-2">Profile</li>
-                            <li className="text-sm text-black w-max my-2">Help</li>
+                            <li className="text-sm text-black w-max my-2 "><Link to='/wishlist'>Refund Policy</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer"><Link to='/'>Terms & Conditions</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer"><Link to='/'>Privacy Policy</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer"><Link to='/'>FAQ</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer"><Link to='/'>About Us</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer"><Link to='/'>Contact Us</Link></li>
+                            <li className="text-sm text-black w-max my-2 cursor-pointer">Help</li>
 
                         </ul>
                     </div>
                     <div className="w-1/2 pl-5 flex flex-col px-5 py-4">
                         <div className=" mr-6">
-                            <h6 className="text-xl font-bold w-max my-2 mb-4" style={{ 'color': '#FF007A' }}>Address</h6>
+                            <h6 className="text-xl font-bold w-max my-2 mb-4" style={{ 'color': '#FF007A' }}>Social Media</h6>
                             <p className="text-xs text-black "> adipisicing elit. Hic, corporis molestiae omnis cum odit unde pariatur qui magnam ex mollitia!</p>
                         </div>
                         <div>

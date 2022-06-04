@@ -62,7 +62,7 @@ function Product_page() {
         <>
             <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
             <Navbar />
-            <div className='w-full flex flex-col my-6'>
+            <div className='w-full flex flex-col mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40'>
                 {/* <div className='flex justify-center w-100'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}

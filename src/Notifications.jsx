@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 function Notifications() {
     return (
         <>
-            <div className="w-full flex flex-col md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4">
+            <div className="w-full flex flex-col md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40" >
             <Navbar />
                 {/* <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
