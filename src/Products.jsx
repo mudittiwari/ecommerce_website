@@ -4,15 +4,17 @@ import logo from '../src/assets/logo.png';
 import * as React from 'react';
 import { List } from '@material-ui/core';
 import homepagefirstcomp from './assets/homepagefirstcomp.png';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
 import { Drawer } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { ListItemText, ListItem, Box } from '@material-ui/core';
+import Navbar from './Navbar';
 // import '../node_modules/@material-ui/core/Drawer'
 
 function Products() {
+    const location = useLocation();
     const [state, setState] = useState({
         // top: false,
         left: false,
@@ -123,7 +125,7 @@ function Products() {
                         changepricekey(temp_key);
                     }} type="checkbox" className='mx-4 bg-transparent' name="" id="" placeholder='' style={{ 'border': '1px solid white' }} />Above Rs. 1500</div>
                 </div>
-                <Box onClick={toggleDrawer(anchor,false)}>
+                <Box onClick={toggleDrawer(anchor, false)}>
                     <button
                         className="bg-pink-900 mx-auto mt-5 w-24 rounded border-0 px-4 mb-5 py-3 block" onClick={(e) => {
                             e.preventDefault();
@@ -264,7 +266,21 @@ function Products() {
         ref.current.continuousStart(0);
         await axios.get(`https://infinite-falls-68793.herokuapp.com/products/`).then((res) => {
             console.log(res);
-            changeproducts(res.data);
+            try {
+                if (location.state.prodname) {
+                    let temp_arr = [];
+                    for (let index = 0; index < res.data.length; index++) {
+                        const element = res.data[index];
+                        if (element.product_name == location.state.prodname) {
+                            temp_arr.push(element);
+                        }
+                    }
+                    changeproducts(temp_arr);
+                }
+            } catch (error) {
+                changeproducts(res.data);
+            }
+            
         }).catch((err) => {
             console.log(err);
         });
@@ -319,15 +335,19 @@ function Products() {
     }, [])
     return (
         <>
-            <div className='w-full flex flex-col my-6'>
-                <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+        <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+            <Navbar />
+            
+            <div className='w-full flex flex-col md:mt-5 sm:mt-5 lg:mt-5 xl:mt-5 2xl:mt-5 mt-0'>
+                
+                
                 {/* <div className='flex justify-center'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         {/* <Button className='text-white mx-5 text-left w-20' onClick={toggleDrawer(anchor, true)}>Filters</Button> */}
-                        <button className='text-white md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent' onClick={toggleDrawer(anchor, true)}>Filters</button>
+                        <button className='text-white md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent mt-3' onClick={toggleDrawer(anchor, true)}>Filters</button>
                         <Drawer className='bg-transparent '
                             anchor={anchor}
                             open={state[anchor]}

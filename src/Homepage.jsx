@@ -14,15 +14,23 @@ import LoadingBar from "react-top-loading-bar";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import Carousel from 'react-material-ui-carousel'
+import Search from '../node_modules/@material-ui/icons/Search';
 function Homepage() {
     const ref = useRef(null);
+    var user = null;
+    const [search, changesearch] = useState('');
+    const navigate = useNavigate();
     const [sectionone, changeone] = useState([]);
     const [sectiontwo, changetwo] = useState([]);
     const [sectionthree, changethree] = useState([]);
     const [sectionfour, changefour] = useState([]);
     const [sectionthreekey, changethreekey] = useState(Math.random());
-    const navigate = useNavigate();
     useEffect(async () => {
+        // localStorage.removeItem('user');
+        if (localStorage.getItem('user'))
+            user = JSON.parse(localStorage.getItem('user'))
+        // console.log(user);
         ref.current.continuousStart(0);
         var prod_array = [];
         await axios.get("https://infinite-falls-68793.herokuapp.com/homepage-sectionone").then((res) => {
@@ -114,112 +122,219 @@ function Homepage() {
         }
         changefour(arr);
         ref.current.complete();
+
+
     }, [])
     return (
         <>
-            <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
-            <div className='flex justify-center'>
-                <input type="text" placeholder='Search' className='md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 w-3/4 my-6 rounded-3xl' style={{ 'backgroundColor': 'rgba(196, 196, 196, 1)' }} />
-            </div>
-            <div className='w-full flex flex-col mb-6 mt-0'>
+            {/* {user.confirmed} */}
+            {localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).confirmed ?
                 <div>
+                    <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+                    <Navbar />
+                    <div className='flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
+                        <input value={search} onChange={(e) => {
+                            changesearch(e.target.value);
+                        }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
+                        <span onClick={(e) => {
+                            e.preventDefault();
+                            navigate('/products', { state: { 'prodname': search } })
+                        }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>
+                    </div>
+                    <div className='w-full flex flex-col mb-6 mt-0'>
+                        <div id='mainslider'>
 
-                    <div id="default-carousel" data-carousel="slide" class="relative">
+                            <Carousel navButtonsAlwaysVisible="true" indicators="false" animation='slide' duration="800">
 
-                        <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 lg:h-96 xl:h-96 2xl:h-96">
+                                <Item />
+                                <Item />
+                                <Item />
 
-                            <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0" data-carousel-item="active">
-                                <img src={homepagebg} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
-                            </div>
+                            </Carousel>
 
-                            <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full" data-carousel-item="">
-                                <img src={homepagebg} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
-                            </div>
+                        </div>
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
 
-                            <div class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform" data-carousel-item="">
-                                <img src={homepagebg} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
-                            </div>
 
-                            <div class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform" data-carousel-item="">
-                                <img src={homepagebg} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
-                            </div>
+                            {/* {sectionone.length} */}
+                            <div className='flex flex-wrap justify-center'>
+                                {sectionone.map((element, index) => {
+                                    return <Firstcomp data={element} />
 
-                            <div class="duration-1000 ease-in-out absolute inset-0 transition-all transform -translate-x-full" data-carousel-item="">
-                                <img src={homepagebg} class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+
+                                })}
                             </div>
                         </div>
-                        <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-                            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                                <span class="hidden">Previous</span>
-                            </span>
-                        </button>
-                        <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
-                            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                <span class="hidden">Next</span>
-                            </span>
-                        </button>
+
+                        <div className='my-6'>
+                            <Slidercomp />
+                        </div>
 
 
 
-                    </div>
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex flex-wrap justify-center'>
+                                {sectiontwo.map((element, index) => {
+                                    return <Firstcomp data={element} />
+                                })}
+                            </div>
+                        </div>
 
-                </div>
-                <div className='my-6 text-center'>
-                    <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                        <div className='my-6 py-6 text-center bg-white'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                                <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
 
+                                    {sectionthree.map((element, index) => {
+                                        // console.log(element.id);
+                                        return <div onClick={(e) => {
+                                            e.preventDefault();
+                                            navigate("/product_page", { state: element });
 
-                    {/* {sectionone.length} */}
-                    <div className='flex flex-wrap justify-center'>
-                        {sectionone.map((element, index) => {
-                            return <Firstcomp data={element} />
+                                        }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                            <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                            <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                            <h6 className='text-black text-center'>{element.brand}</h6>
+                                            <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                        </div>
+                                    })}
 
+                                </OwlCarousel>
 
-                        })}
-                    </div>
-                </div>
+                            </div>
+                            <div className='hidden lg:block xl:block 2xl:block'>
+                                <div className='flex justify-around'>
+                                    <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
 
-                <div className='my-6'>
-                    <Slidercomp />
-                </div>
+                                        {sectionthree.map((element, index) => {
+                                            // console.log(element.id);
+                                            return <div onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/product_page", { state: element });
 
+                                            }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                                <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                                <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                                <h6 className='text-black text-center'>{element.brand}</h6>
+                                                <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                            </div>
+                                        })}
 
+                                    </OwlCarousel>
 
-                <div className='my-6 text-center'>
-                    <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex flex-wrap justify-center'>
-                        {sectiontwo.map((element, index) => {
-                            return <Firstcomp data={element} />
-                        })}
-                    </div>
-                </div>
-
-                <div className='my-6 py-6 text-center bg-white'>
-                    <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
-                        <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
-
-                            {sectionthree.map((element, index) => {
-                                // console.log(element.id);
-                                return <div onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate("/product_page", { state: element });
-
-                                }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                    <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
-                                    <h6 className='font-bold text-black'>{element.product_name}</h6>
-                                    <h6 className='text-black text-center'>{element.brand}</h6>
-                                    <h6 className='text-black text-center'>Rs {element.price}</h6>
                                 </div>
+                            </div>
+                            <div className='hidden sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
+                                <div className='flex justify-around'>
+                                    <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
+
+                                        {sectionthree.map((element, index) => {
+                                            // console.log(element.id);
+                                            return <div onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/product_page", { state: element });
+
+                                            }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                                <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                                <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                                <h6 className='text-black text-center'>{element.brand}</h6>
+                                                <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                            </div>
+                                        })}
+
+                                    </OwlCarousel>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='my-6 text-center'>
+                            <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                            <div className='flex flex-wrap justify-center'>
+                                {sectionfour.map((element, index) => {
+                                    return <Thirdcomp data={element} />
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div> :  localStorage.getItem('user') && !JSON.parse(localStorage.getItem('user')).confirmed ? <div className=' flex flex-col items-center justify-center h-screen'><h1 className='mx-auto mt-20 mb-10 w-max'>A email has been sent for email verification</h1><button className="px-6 py-1" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async (e) => {
+
+                    e.preventDefault();
+                    // ref.current.continuousStart(0);
+                    
+                    await axios.post("https://infinite-falls-68793.herokuapp.com/auth/send-email-confirmation", {
+                        "email": user.email
+                    }).then((res) => {
+                        // ref.current.complete();
+                        // localStorage.setItem('user', JSON.stringify(res.data.user));
+                        // localStorage.setItem('jwt', res.data.jwt);
+                        // // console.log(res.data.user);
+                        // navigate("/login");
+                        console.log(res);
+
+                    }).catch((err) => {
+                        // ref.current.complete(0);
+                        console.log(err);
+                    });
+                }}>Resend Email</button>  </div> : <div>
+                <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+                <Navbar />
+                <div className='flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
+                    <input value={search} onChange={(e) => {
+                        changesearch(e.target.value);
+                    }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
+                    <span onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/products', { state: { 'prodname': search } })
+                    }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>
+                </div>
+                <div className='w-full flex flex-col mb-6 mt-0'>
+                    <div id='mainslider'>
+
+                        <Carousel navButtonsAlwaysVisible="true" indicators="false" animation='slide' duration="800">
+
+                            <Item />
+                            <Item />
+                            <Item />
+
+                        </Carousel>
+
+                    </div>
+                    <div className='my-6 text-center'>
+                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+
+
+                        {/* {sectionone.length} */}
+                        <div className='flex flex-wrap justify-center'>
+                            {sectionone.map((element, index) => {
+                                return <Firstcomp data={element} />
+
+
                             })}
-
-                        </OwlCarousel>
-
+                        </div>
                     </div>
-                    <div className='hidden sm:hidden md:hidden xl:block 2xl:block'>
-                        <div className='flex justify-around'>
-                            <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
+
+                    <div className='my-6'>
+                        <Slidercomp />
+                    </div>
+
+
+
+                    <div className='my-6 text-center'>
+                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                        <div className='flex flex-wrap justify-center'>
+                            {sectiontwo.map((element, index) => {
+                                return <Firstcomp data={element} />
+                            })}
+                        </div>
+                    </div>
+
+                    <div className='my-6 py-6 text-center bg-white'>
+                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                        <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                            <OwlCarousel key={sectionthreekey} items={2} className="owl-theme" autoplay={true}>
 
                                 {sectionthree.map((element, index) => {
                                     // console.log(element.id);
@@ -228,7 +343,7 @@ function Homepage() {
                                         navigate("/product_page", { state: element });
 
                                     }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                        <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
                                         <h6 className='font-bold text-black'>{element.product_name}</h6>
                                         <h6 className='text-black text-center'>{element.brand}</h6>
                                         <h6 className='text-black text-center'>Rs {element.price}</h6>
@@ -238,42 +353,73 @@ function Homepage() {
                             </OwlCarousel>
 
                         </div>
+                        <div className='hidden lg:block xl:block 2xl:block'>
+                            <div className='flex justify-around'>
+                                <OwlCarousel key={sectionthreekey} items={4} className="owl-theme" autoplay={true}>
+
+                                    {sectionthree.map((element, index) => {
+                                        // console.log(element.id);
+                                        return <div onClick={(e) => {
+                                            e.preventDefault();
+                                            navigate("/product_page", { state: element });
+
+                                        }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                            <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                            <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                            <h6 className='text-black text-center'>{element.brand}</h6>
+                                            <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                        </div>
+                                    })}
+
+                                </OwlCarousel>
+
+                            </div>
+                        </div>
+                        <div className='hidden sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
+                            <div className='flex justify-around'>
+                                <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
+
+                                    {sectionthree.map((element, index) => {
+                                        // console.log(element.id);
+                                        return <div onClick={(e) => {
+                                            e.preventDefault();
+                                            navigate("/product_page", { state: element });
+
+                                        }} className='w-full cursor-pointer h-max bg-white p-4 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
+                                            <img className="w-4/5" style={{ 'width': '250px', 'height': '250px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                            <h6 className='font-bold text-black'>{element.product_name}</h6>
+                                            <h6 className='text-black text-center'>{element.brand}</h6>
+                                            <h6 className='text-black text-center'>Rs {element.price}</h6>
+                                        </div>
+                                    })}
+
+                                </OwlCarousel>
+
+                            </div>
+                        </div>
                     </div>
-                    <div className='hidden sm:block md:block'>
-                        <div className='flex justify-around'>
-                            <OwlCarousel key={sectionthreekey} items={3} className="owl-theme" autoplay={true}>
 
-                                {sectionthree.map((element, index) => {
-                                    // console.log(element.id);
-                                    return <div onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate("/product_page", { state: element });
-
-                                    }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                        <img className="w-4/5" style={{'width':'250px','height':'250px'}} src={JSON.parse(element.photos)[0]} alt="" />
-                                        <h6 className='font-bold text-black'>{element.product_name}</h6>
-                                        <h6 className='text-black text-center'>{element.brand}</h6>
-                                        <h6 className='text-black text-center'>Rs {element.price}</h6>
-                                    </div>
-                                })}
-
-                            </OwlCarousel>
-
+                    <div className='my-6 text-center'>
+                        <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
+                        <div className='flex flex-wrap justify-center'>
+                            {sectionfour.map((element, index) => {
+                                return <Thirdcomp data={element} />
+                            })}
                         </div>
                     </div>
                 </div>
-
-                <div className='my-6 text-center'>
-                    <h1 className='font-bold text-2xl mb-6' style={{ 'color': '#FF007A' }}>Heading</h1>
-                    <div className='flex flex-wrap justify-center'>
-                        {sectionfour.map((element, index) => {
-                            return <Thirdcomp data={element} />
-                        })}
-                    </div>
-                </div>
-            </div>
+            </div>}
         </>
     );
 }
 
+function Item() {
+    return (
+        // <Paper style={{'borderRadius':'0px !important'}}>
+        <div>
+            <img src={homepagebg} alt="..." />
+        </div>
+        // </Paper>
+    )
+}
 export default Homepage;

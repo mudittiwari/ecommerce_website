@@ -20,15 +20,16 @@ import Editproduct from './Admin_comps/Editproduct';
 import Homepagecomp from './Admin_comps/Homepagecomp';
 import Cart from './Cart';
 import Forgotpassword from './Forgotpassword';
+import Confirm_email from './Confirm_email';
+import Confirmuser from './Confirmemail';
 function App()
 {
     return( 
     <>
         <HashRouter>
-        <Navbar />
+       
             <Routes>
                 <Route exact path="/" element={<Homepage/>}/>
-                
                 <Route exact path="/products" element={<Products/>}/>
                 <Route exact path="/login" element={<Login/>}/>
                 <Route exact path="/otp" element={<Otp/>}/>
@@ -40,6 +41,8 @@ function App()
                 <Route exact path="/profile" element={<Profile/>}/>
                 <Route exact path="/cart" element={<Cart/>}/>
                 <Route exact path="/forgot-password/:code" element={<Forgotpassword/>}/>
+                <Route exact path="/confirmemail/" element={<Confirm_email/>}/>
+                <Route exact path="/confirm-email/:code" element={<Confirmuser/>}/>
                 <Route exact path="/notifications" element={<Notifications/>}/>
                 <Route exact path="/product_page" element={<Product_page/>}/>
                 <Route exact path="/Admin_Panel" element={<AdminLogin/>}/>

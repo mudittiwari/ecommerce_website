@@ -4,3 +4,20 @@
     background-color: #FF007A;
   }
   
+
+#mainslider .css-1m9128y
+{
+  display: none;
+}
+
+
+#searchinput:focus
+{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none;
+}
+#searchinput
+{
+  color: rgb(255, 0, 122);
+}

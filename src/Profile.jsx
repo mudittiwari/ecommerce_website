@@ -5,6 +5,7 @@ import LoadingBar from "react-top-loading-bar";
 import { Drawer } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { ListItemText, ListItem, Box } from '@material-ui/core';
+import Navbar from "./Navbar";
 function Profile_comp() {
     const ref = useRef(null);
     const [disabled, turndisabled] = useState(true);
@@ -229,7 +230,9 @@ function Profile() {
     const [bg, changebg] = useState(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent']);
     return (
         <>
-            <div className="w-full flex md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col">
+        <Navbar />
+            <div className="w-full md:mt-5 sm:mt-5 lg:mt-5 xl:mt-5 2xl:mt-5 mt-0 flex md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col">
+                
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         {/* <Button className='text-white mx-5 text-left w-20' onClick={toggleDrawer(anchor, true)}>Filters</Button> */}

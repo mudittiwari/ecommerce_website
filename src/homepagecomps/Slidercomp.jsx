@@ -1,6 +1,10 @@
 import React from "react";
 import 'flowbite';
 import slidercomp from '../assets/sliderimage.png';
+// import React from 'react';
+import Carousel from 'react-material-ui-carousel'
+import { Paper, Button } from "@material-ui/core";
+
 function Slidercomp() {
     return (
         <>
@@ -56,7 +60,7 @@ function Slidercomp() {
 
 
 
-            <div id="indicators-carousel" class="relative" data-carousel="static">
+            {/* <div id="indicators-carousel" class="relative" data-carousel="static">
 
                 <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 lg:h-96 xl:h-96 2xl:h-96">
 
@@ -90,9 +94,39 @@ function Slidercomp() {
                 </div>
 
 
-            </div>
+            </div> */}
+            {/* var items = [
+            {
+                "title": "Random Name #1",
+                "description": "Probably the most random thing you have ever seen!"
+        },
+            {
+                "title": "Random Name #2",
+                description: "Hello World!"
+        }
+            ] */}
 
+           
+            <Carousel navButtonsAlwaysInvisible="true"  animation='slide' duration="800">
+                
+                   <Item />
+                   <Item />
+                   <Item />
+                
+            </Carousel>
+            
         </>
     );
+}
+
+function Item()
+{
+    return (
+        // <Paper style={{'borderRadius':'0px !important'}}>
+            <div>
+                        <img src={slidercomp} alt="..." />
+                    </div>
+        // </Paper>
+    )
 }
 export default Slidercomp;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import logo from '../src/assets/logo.png';
 import Orders_returns_comp from "./Orders_returns_comp";
 import LoadingBar from "react-top-loading-bar";
+import Navbar from "./Navbar";
 import axios from "axios";
 function Orders_returns() {
     const ref=useRef(null);
@@ -64,6 +65,7 @@ function Orders_returns() {
         <>
             <div className="w-full px-6 mb-10">
             <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
+            <Navbar />
                 <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div>

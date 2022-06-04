@@ -37,13 +37,18 @@ function Login() {
                             "identifier":email,
                             "password":password
                         }).then((res)=>{
-                            // console.log(res);
+
+                            console.log(res);
                             ref.current.complete();
                             localStorage.setItem('user', JSON.stringify(res.data.user));
                             localStorage.setItem('jwt',res.data.jwt);
                             navigate("/");
                         }).catch((err)=>{
-                            console.log(err);
+                            // navigate("/confirmemail")
+                            if(err.response.data.message[0].messages[0].id=="Auth.form.error.confirmed")
+                            {
+                                navigate("/confirmemail",{state:{email:email}})
+                            }
                             ref.current.complete();
                         });
                     }}>Continue</button>

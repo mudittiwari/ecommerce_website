@@ -14,7 +14,9 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { makeStyles } from '@material-ui/styles';
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '../node_modules/@material-ui/icons/ExpandMore';
+import Navbar from './Navbar';
 function Product_page() {
+    const [index,changeindex]=useState(0);
     const [related_prods, changerelatedprods] = useState([]);
     const [related_prodskey, changerelatedprodskey] = useState(Math.random());
     const navigate = useNavigate();
@@ -59,14 +61,22 @@ function Product_page() {
     return (
         <>
             <LoadingBar style={{ 'backgroundColor': '#FF007A', 'zIndex': 10 }} ref={ref} />
+            <Navbar />
             <div className='w-full flex flex-col my-6'>
                 {/* <div className='flex justify-center w-100'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}
                 <div className='w-full md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col flex justify-evenly mt-10'>
-                    <div className='md:w-2/5 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full'>
-                        <img className='hidden md:block lg:block xl:block 2xl:block' src={JSON.parse(data.photos)[0]} width="300px" alt="" />
-                        <img className='w-full block md:hidden lg:hidden xl:hidden 2xl:hidden' src={JSON.parse(data.photos)[0]} alt="" />
+                    <div className='md:w-2/5 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full flex flex-col'>
+                        <img className='hidden md:block lg:block xl:block 2xl:block' src={JSON.parse(data.photos)[index]} width="300px" style={{'width':'300px','height':'300px'}} alt="" />
+                        <img className='w-full block md:hidden lg:hidden xl:hidden 2xl:hidden' src={JSON.parse(data.photos)[index]} alt="" />
+                        <div className='flex mt-3 px-3'>
+                        {JSON.parse(data.photos).map((element,index)=>{
+                            return <div className='w-10 mx-1 cursor-pointer'>
+                                <img style={{'width':'80px','height':'80px'}} onClick={(e)=>{e.preventDefault();changeindex(index)}} src={element} alt="" />
+                            </div>;
+                        })}
+                        </div>
                     </div>
                     <div className='md:w-2/5 md:px-0 lg:px-0 xl:px-0 2xl:px-0 px-4 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full pt-5 '>
                         <h1 className='text-2xl'>{data.product_name}</h1>
@@ -248,7 +258,8 @@ function Product_page() {
                                 // console.log(element.id);
                                 return <div onClick={(e) => {
                                     e.preventDefault();
-                                    navigate("/product_page", { state: element });
+                                    // navigate("/product_page", { state: element });
+                                    changedata(element);
 
                                 }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
                                     <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
@@ -269,7 +280,7 @@ function Product_page() {
                                     // console.log(element.id);
                                     return <div onClick={(e) => {
                                         e.preventDefault();
-                                        navigate("/product_page", { state: element });
+                                        changedata(element);
 
                                     }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
                                         <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
@@ -290,8 +301,9 @@ function Product_page() {
                                 {related_prods.map((element, index) => {
                                     // console.log(element.id);
                                     return <div onClick={(e) => {
+                                        // console.log("mudittiwari")
                                         e.preventDefault();
-                                        navigate("/product_page", { state: element });
+                                        changedata(element);
 
                                     }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
                                         <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />

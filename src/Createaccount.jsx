@@ -23,7 +23,7 @@ function Createaccount() {
                 <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div>
-                <div className="w-11/12 bg-white h-max py-6 px-20">
+                <div className="w-11/12 bg-white h-max py-6 px-6 sm:px-20 md:px-20 lg:px-20 xl:px-20 2xl:px-20">
                     <h1 className="text-xl text-black text-center font-semibold mb-14">CREATE ACCOUNT</h1>
                     <input value={name} onChange={((e)=>{
                         changename(e.target.value);
@@ -33,10 +33,10 @@ function Createaccount() {
                     })} className="w-full text-black  border-t-0 border-x-0 my-3" type="email" placeholder="Email" />
                     <input value={password} onChange={((e)=>{
                         changepassword(e.target.value);
-                    })} className="w-full text-black border-t-0 border-x-0 my-3" type="tel" placeholder="password" />
+                    })} className="w-full text-black border-t-0 border-x-0 my-3" type="password" placeholder="password" />
                     <input value={confirmpass} onChange={((e)=>{
                         changeconfirmpass(e.target.value);
-                    })} className="w-full text-black border-t-0 border-x-0 my-3" type="tel" placeholder="confirm password" />
+                    })} className="w-full text-black border-t-0 border-x-0 my-3" type="password" placeholder="confirm password" />
                     
                     <input value={mobile} onChange={((e)=>{
                         changemobile(e.target.value);
@@ -50,7 +50,7 @@ function Createaccount() {
                         }}>
                         <input className="mx-0" type="radio" name="gender" value="male"/><span className="text-black mx-3">Male</span>
                         {/* <div className="mx-5 w-0 h-0"></div> */}
-                        <input className="ml-40" type="radio" name="gender" value="female" /><span className="text-black mx-3">Female</span>
+                        <input className="sm:ml-40 md:ml-40 lg:ml-40 xl:ml-40 2xl:ml-40 ml-10" type="radio" name="gender" value="female" /><span className="text-black mx-3">Female</span>
                         </div>
                         
                     </div>
@@ -79,8 +79,8 @@ function Createaccount() {
                             "cart":JSON.stringify([])
                         }).then((res)=>{
                             ref.current.complete();
-                            localStorage.setItem('user', JSON.stringify(res.data.user));
-                            localStorage.setItem('jwt',res.data.jwt);
+                            // localStorage.setItem('user', JSON.stringify(res.data.user));
+                            // localStorage.setItem('jwt',res.data.jwt);
                             // console.log(res.data.user);
                             navigate("/login");
                             

@@ -1,11 +1,12 @@
 import React from "react";
 import logo from '../src/assets/logo.png';
 import homepagefirstcomp from './assets/homepagefirstcomp.png';
-
+import Navbar from "./Navbar";
 function Notifications() {
     return (
         <>
             <div className="w-full flex flex-col md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4">
+            <Navbar />
                 {/* <div className='flex justify-center my-5'>
                     <img src={logo} height="200px" width="200px" alt="" />
                 </div> */}
