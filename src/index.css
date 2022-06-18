@@ -22,7 +22,8 @@ code {
 }
 input:focus
 {
-  outline: none
+  outline: none;
+  box-shadow: none;
 }
 .MuiBadge-badge
 {

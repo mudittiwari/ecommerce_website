@@ -14,10 +14,6 @@ import Orderconfirmed from './Orderconfirmed';
 import Orders_returns from './Orders_returns';
 import Profile from './Profile';
 import Notifications from './Notifications';
-import Admin_panel from './Admin_panel';
-import AdminLogin from './AdminLogin';
-import Editproduct from './Admin_comps/Editproduct';
-import Homepagecomp from './Admin_comps/Homepagecomp';
 import Cart from './Cart';
 import Forgotpassword from './Forgotpassword';
 import Confirm_email from './Confirm_email';
@@ -35,7 +31,7 @@ function App()
                 <Route exact path="/otp" element={<Otp/>}/>
                 <Route exact path="/password" element={<Password/>}/>
                 <Route exact path="/createaccount" element={<Createaccount/>}/>
-                <Route exact path="/orderconfirmed" element={<Orderconfirmed/>}/>
+                <Route exact path="/order" element={<Orderconfirmed/>}/>
                 <Route exact path="/orders" element={<Orders_returns/>}/>
                 <Route exact path="/wishlist" element={<Wishlist/>}/>
                 <Route exact path="/profile" element={<Profile/>}/>
@@ -45,10 +41,6 @@ function App()
                 <Route exact path="/confirm-email/:code" element={<Confirmuser/>}/>
                 <Route exact path="/notifications" element={<Notifications/>}/>
                 <Route exact path="/product_page" element={<Product_page/>}/>
-                <Route exact path="/Admin_Panel" element={<AdminLogin/>}/>
-                <Route exact path="/Admin_dashboard" element={<Admin_panel/>}/>
-                <Route exact path="/Admin_dashboard/products/editproduct" element={<Editproduct/>}/>
-                <Route exact path="/Admin_dashboard/products/homepagecomp" element={<Homepagecomp/>}/>
             </Routes>
             <Footermain/>
         </HashRouter>

@@ -28,7 +28,7 @@ function Navbar() {
             if (JSON.parse(JSON.parse(localStorage.getItem('user')).cart)) {
                 // console.log("mudittiwari");
                 let len = JSON.parse(JSON.parse(localStorage.getItem('user')).cart).length;
-                changecartlen(JSON.parse(JSON.parse(localStorage.getItem('user')).cart.length));
+                changecartlen(len);
                 changecartkey(Math.random());
             }
             changetoshow(1);
@@ -36,14 +36,14 @@ function Navbar() {
         else
             changetoshow(0);
         // console.log(cartlen);
-    }, [])
+    }, [localStorage.getItem('user')])
     return (
         <>
             {localStorage.getItem('user') ?
                 <div>
-                    <div className="bg-black z-20 sm:flex md:flex lg:flex xl:flex 2xl:flex w-screen hidden flex-col fixed top-0 pb-3">
+                    <div className="bg-black z-50 sm:flex md:flex lg:flex xl:flex 2xl:flex w-screen hidden flex-col fixed top-0 pb-3">
                         <div className='flex justify-center my-5'>
-                            <img src={logo} onClick={(e) => {
+                            <img className='cursor-pointer' src={logo} onClick={(e) => {
                                 e.preventDefault();
                                 navigate("/");
                             }} height="400px" width="400px" alt="" />
@@ -52,7 +52,7 @@ function Navbar() {
                             <ul className='flex w-full justify-center'>
                                 <li className='mx-4 nav_li capitalize'><Link to="/">Home</Link></li>
                                 {cartlen==0?<li className='nav_li capitalize mx-4'><Link to="/cart">Cart</Link></li>:
-                                <Badge className='ml-4 mr-8' badgeContent={cartlen}><li className='nav_li capitalize'><Link to="/cart">Cart</Link></li></Badge>}
+                                <Badge className='ml-4 mr-8' badgeContent={cartlen} color="secondary"><li className='nav_li capitalize'><Link to="/cart">Cart</Link></li></Badge>}
                                 {wishlistlen==0?<li className='nav_li capitalize mx-4'><Link to="/wishlist">Wishlist</Link></li>:<Badge className='ml-4 mr-8' badgeContent={wishlistlen} color="secondary"><li className='nav_li capitalize'><Link to="/wishlist">Wishlist</Link></li></Badge>}
                                 <li className='mx-4 nav_li capitalize'><Link to="/orders">Orders</Link></li>
                                 <li className='mx-4 nav_li capitalize'><Link to='/notifications'>Notifications</Link></li>
@@ -68,7 +68,7 @@ function Navbar() {
 
 
 
-                    <nav className="bg-black fixed top-0 w-screen z-20 sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden flex flex-wrap items-center justify-between px-2 pt-3 pb-3">
+                    <nav className="bg-black fixed top-0 w-screen z-50 sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden flex flex-wrap items-center justify-between px-2 pt-3 pb-3">
                         <div className="container mx-auto flex flex-col flex-wrap items-center justify-between">
                             <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                                 <img src={logo} height="150px" width="150px" alt="" />
@@ -109,7 +109,7 @@ function Navbar() {
                                         e.preventDefault();
                                         document.body.style.overflow = "visible"
                                     }} className='mx-4 nav_li capitalize'><Link to="/cart">Cart</Link></li>:
-                                    <Badge className='flex justify-center w-max mt-3' badgeContent={cartlen}><li onClick={(e) => {
+                                    <Badge className='flex justify-center w-max mt-3' badgeContent={cartlen} color="secondary"><li onClick={(e) => {
                                         e.preventDefault();
                                         document.body.style.overflow = "visible"
                                     }} className='mx-4 nav_li capitalize'><Link to="/cart">Cart</Link></li></Badge>}

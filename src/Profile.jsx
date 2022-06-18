@@ -5,9 +5,11 @@ import LoadingBar from "react-top-loading-bar";
 import { Drawer } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { ListItemText, ListItem, Box } from '@material-ui/core';
+import Menu from '../node_modules/@material-ui/icons/Menu';
 import Navbar from "./Navbar";
 function Profile_comp() {
     const ref = useRef(null);
+    const navigate = useNavigate();
     const [disabled, turndisabled] = useState(true);
     const [name, changename] = useState(JSON.parse(localStorage.getItem('user')).fullname);
     const [mobile, changemobile] = useState(JSON.parse(localStorage.getItem('user')).mobile);
@@ -48,6 +50,7 @@ function Profile_comp() {
                 <button key={statuskey} className="px-3 py-1 rounded" style={{
                     'backgroundColor': 'rgba(196, 196, 196, 1)'
                 }} onClick={async (e) => {
+                    console.log(localStorage.getItem('jwt'));
                     e.preventDefault();
                     if (status == "edit") {
                         turndisabled(false);
@@ -59,7 +62,7 @@ function Profile_comp() {
                             {
                                 "username": email,
                                 "email": email,
-                                // "password": password,
+                                
                                 "fullname": name,
                                 "gender": gender,
                                 "age": age,
@@ -72,11 +75,42 @@ function Profile_comp() {
                                     Authorization:
                                         `Bearer ${localStorage.getItem('jwt')}`,
                                 },
-                            }).then((res) => {
+                            }).then(async(res) => {
                                 console.log(res.data);
                                 changestatuskey(Math.random());
                                 changereload(true);
-                                localStorage.setItem('user', JSON.stringify(res.data));
+                                if (email != JSON.parse(localStorage.getItem('user')).email) {
+                                    await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
+                                    {
+                                        "confirmed": false,
+                                        "email": email,
+                                        "username": email,
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization:
+                                                `Bearer ${localStorage.getItem('jwt')}`,
+                                        },
+                                    }).then(async(res) => {
+                                        console.log(res.data);
+                                    }).catch(err => {
+                                        console.log(err);
+                                    }
+                                    );
+                                    await axios.post("https://infinite-falls-68793.herokuapp.com/auth/send-email-confirmation", {
+                                        "email": email,
+                                    }).then((res) => {
+                                        localStorage.removeItem('user');
+                                        localStorage.removeItem('jwt');
+                                        navigate("/login");
+                                        console.log(res);
+                                    }).catch((err) => {
+                                        console.log(err);
+                                    });
+                                }
+                                else {
+                                    localStorage.setItem('user', JSON.stringify(res.data));
+                                }
                                 ref.current.complete();
                             }).catch((err) => {
                                 console.log(err);
@@ -101,7 +135,7 @@ function Coupons_comp() {
                     <div className="w-36 h-36 rounded-md bg-white mx-2 my-2"></div>
                     <div className="w-36 h-36 rounded-md bg-white mx-2 my-2"></div>
                 </div>
-                
+
             </div>
         </>
     );
@@ -169,26 +203,26 @@ function Profile() {
 
             <ul className="flex flex-col items-end">
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[0]}`, 'position': 'relative', 'left': '56px' }}>
-                <Box onClick={toggleDrawer(anchor,false)}>
-                    <button className="text-black font-semibold w-full text-left" onClick={() => {
-                        changebg(['white', 'transparent', 'transparent', 'transparent', 'transparent', 'transparent'])
-                    }}>Coupons</button>
+                    <Box onClick={toggleDrawer(anchor, false)}>
+                        <button className="text-black font-semibold w-full text-left" onClick={() => {
+                            changebg(['white', 'transparent', 'transparent', 'transparent', 'transparent', 'transparent'])
+                        }}>Coupons</button>
                     </Box>
                 </li>
 
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[1]}`, 'position': 'relative', 'left': '56px' }}>
-                <Box onClick={toggleDrawer(anchor,false)}>
-                    <button className="text-black font-semibold w-full text-left" onClick={() => {
-                        changebg(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent'])
-                    }}>Profile</button>
+                    <Box onClick={toggleDrawer(anchor, false)}>
+                        <button className="text-black font-semibold w-full text-left" onClick={() => {
+                            changebg(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent'])
+                        }}>Profile</button>
                     </Box>
                 </li>
 
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[2]}`, 'position': 'relative', 'left': '56px' }}>
-                <Box onClick={toggleDrawer(anchor,false)}>
-                    <button className="text-black font-semibold w-full text-left" onClick={() => {
-                        changebg(['transparent', 'transparent', 'white', 'transparent', 'transparent', 'transparent'])
-                    }}>Address</button>
+                    <Box onClick={toggleDrawer(anchor, false)}>
+                        <button className="text-black font-semibold w-full text-left" onClick={() => {
+                            changebg(['transparent', 'transparent', 'white', 'transparent', 'transparent', 'transparent'])
+                        }}>Address</button>
                     </Box>
                 </li>
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[3]}`, 'position': 'relative', 'left': '56px' }}>
@@ -202,11 +236,11 @@ function Profile() {
                     }}>Logout</button>
                 </li>
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[4]}`, 'position': 'relative', 'left': '56px' }}>
-                <Box onClick={toggleDrawer(anchor,false)}>
-                    <button className="text-black font-semibold w-full text-left" onClick={() => {
-                        changebg(['transparent', 'transparent', 'transparent', 'transparent', 'white', 'transparent'])
+                    <Box onClick={toggleDrawer(anchor, false)}>
+                        <button className="text-black font-semibold w-full text-left" onClick={() => {
+                            changebg(['transparent', 'transparent', 'transparent', 'transparent', 'white', 'transparent'])
 
-                    }}>Change Password</button>
+                        }}>Change Password</button>
                     </Box>
                 </li>
                 <li className="w-56 py-2 px-2 rounded" style={{ 'backgroundColor': `${bg[5]}`, 'position': 'relative', 'left': '56px' }}>
@@ -230,13 +264,13 @@ function Profile() {
     const [bg, changebg] = useState(['transparent', 'white', 'transparent', 'transparent', 'transparent', 'transparent']);
     return (
         <>
-        <Navbar />
+            <Navbar />
             <div className="w-full mt-16 sm:mt-44 md:mt-44 lg:mt-44 xl:mt-44 2xl:mt-44 flex md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col">
-                
+
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         {/* <Button className='text-white mx-5 text-left w-20' onClick={toggleDrawer(anchor, true)}>Filters</Button> */}
-                        <button className='text-white my-4 md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent' onClick={toggleDrawer(anchor, true)}>Sidebar</button>
+                        <span className='md:hidden lg:hidden xl:hidden 2xl:hidden block' onClick={toggleDrawer(anchor, true)}> <Menu className='text-white mx-5 mt-3' /></span>
                         <Drawer
                             anchor={anchor}
                             open={state[anchor]}

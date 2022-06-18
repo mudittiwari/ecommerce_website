@@ -8,6 +8,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
 import { Drawer } from '@material-ui/core';
+import Menu from '../node_modules/@material-ui/icons/Menu';
 import { Button } from '@material-ui/core';
 import { ListItemText, ListItem, Box } from '@material-ui/core';
 import Navbar from './Navbar';
@@ -347,7 +348,8 @@ function Products() {
                 {['left'].map((anchor) => (
                     <React.Fragment key={anchor}>
                         {/* <Button className='text-white mx-5 text-left w-20' onClick={toggleDrawer(anchor, true)}>Filters</Button> */}
-                        <button className='text-white md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent mt-3' onClick={toggleDrawer(anchor, true)}>Filters</button>
+                        {/* <button className='text-white md:hidden lg:hidden xl:hidden 2xl:hidden block mx-5 text-left w-20 bg-transparent mt-3' onClick={toggleDrawer(anchor, true)}>Filters</button> */}
+                       <span className='md:hidden lg:hidden xl:hidden 2xl:hidden block' onClick={toggleDrawer(anchor, true)}> <Menu className='text-white mx-5 mt-3'/></span>
                         <Drawer className='bg-transparent '
                             anchor={anchor}
                             open={state[anchor]}

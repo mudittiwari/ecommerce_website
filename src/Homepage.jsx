@@ -17,16 +17,27 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Carousel from 'react-material-ui-carousel'
 import { Link } from 'react-router-dom';
 import Search from '../node_modules/@material-ui/icons/Search';
+import userEvent from '@testing-library/user-event';
+import RemoveIcon from '../node_modules/@material-ui/icons/CloseOutlined';
 function Homepage() {
+    // username usestate
+    const [username, setUsername] = useState('');
+
     const ref = useRef(null);
+    const inputref = useRef(null);
     var user = null;
+    const [searchitems, changesearchitems] = useState([]);
+    const [searchitemkey, changesearchitemkey] = useState(Math.random());
     const [search, changesearch] = useState('');
     const navigate = useNavigate();
+    const [searchstate, changesearchstate] = useState("none");
     const [sectionone, changeone] = useState([]);
     const [sectiontwo, changetwo] = useState([]);
     const [sectionthree, changethree] = useState([]);
     const [sectionfour, changefour] = useState([]);
     const [sectionthreekey, changethreekey] = useState(Math.random());
+
+
     useEffect(async () => {
         // localStorage.removeItem('user');
         if (localStorage.getItem('user'))
@@ -126,23 +137,71 @@ function Homepage() {
 
 
     }, [])
+    async function changesearchitems_(e) {
+        if (e.length == 0) {
+            changesearchitems([]);
+            changesearchitemkey(Math.random());
+        }
+        else {
+            var items;
+            await axios.get(`https://infinite-falls-68793.herokuapp.com/products/`, {
+                params: {
+                    "product_name_contains": e
+                }
+            }).then((res) => {
+                items = res.data;
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            }
+            );
+            changesearchitems(items);
+            changesearchitemkey(Math.random());
+        }
+    }
     return (
         <>
-            {/* {user.confirmed} */}
+
+
+
+
+
             {localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).confirmed ?
-                <div>
+                <div className='relative'>
                     <LoadingBar style={{ 'backgroundColor': 'red', 'zIndex': 10 }} ref={ref} />
                     <Navbar />
-                    <div className='mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40 flex mx-auto justify-between pl-1 pr-2 items-center h-max w-max rounded-3xl my-6' style={{ 'backgroundColor': 'rgb(196, 196, 196)' }}>
-                        <input value={search} onChange={(e) => {
-                            changesearch(e.target.value);
-                        }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 w-100 ' />
-                        <span onClick={(e) => {
-                            e.preventDefault();
-                            navigate('/products', { state: { 'prodname': search } })
-                        }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>
+                    <div className='mt-20 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40 2xl:mt-40 flex mx-auto justify-between pl-1 pr-2 items-center h-max' style={{ 'backgroundColor': 'rgb(196, 196, 196)', 'width': '300px' }}>
+                        <div>
+                            <input autoComplete='off' onFocus={(e) => {
+                                e.preventDefault();
+                                changesearchstate("block");
+                            }} value={search} onChange={(e) => {
+                                changesearch(e.target.value);
+                                changesearchitems_(e.target.value);
+                            }} id='searchinput' type="text" placeholder='Search' className='rounded-3xl bg-transparent border-0 ' style={{ 'width': '250px' }} />
+                            {searchstate == "block" ? <span onClick={(e) => {
+                                e.preventDefault();
+                                // navigate('/products', { state: { 'prodname': search } })
+                                changesearchstate("none");
+                            }}><RemoveIcon className="ml-1 cursor-pointer" style={{ 'color': 'rgb(255, 0, 122)' }} /></span> : <span onClick={(e) => {
+                                e.preventDefault();
+                                // navigate('/products', { state: { 'prodname': search } })
+                                changesearchstate("none");
+                            }}><Search className="ml-1" style={{ 'color': 'rgb(255, 0, 122)' }} /></span>}</div>
                     </div>
-                    <div className='w-full flex flex-col mb-6 mt-0'>
+                    {true ?
+                        <div key={searchitemkey} className='flex absolute  bg-black flex-col mx-auto z-40 max-h-52 overflow-auto' style={{ 'width': '300px', 'left': '50%', 'transform': 'translate(-49.9%,0)', 'display': `${searchstate}`, 'backgroundColor': 'rgb(196, 196, 196)' }}>
+                            {search.length != 0 ? searchitems.map((item, index) => {
+                                return (
+                                    <div><h1 onClick={(e) => {
+                                        console.log("mudit")
+                                        e.preventDefault();
+                                        navigate('/products', { state: { 'prodname': item.product_name } })
+                                    }} className='text-black px-2 my-2 cursor-pointer'>{item.product_name}</h1>{index != searchitems.length - 1 ? <hr className=' bg-black border-0' style={{ 'height': '1px' }}></hr> : null}</div>
+                                );
+                            }) : <div className='text-black mb-1 px-2' style={{ 'display': `${searchstate}` }}>No results found</div>}
+                        </div> : null}
+                    <div className='w-full flex flex-col mb-6 mt-6'>
                         <div id='mainslider'>
 
                             <Carousel navButtonsAlwaysVisible="true" indicators="false" animation='slide' duration="800">

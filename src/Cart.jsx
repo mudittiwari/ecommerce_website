@@ -7,8 +7,10 @@ import AddIcon from '../node_modules/@material-ui/icons/Add';
 import RemoveIcon from '../node_modules/@material-ui/icons/Remove';
 import LoadingBar from "react-top-loading-bar";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 function Cart() {
     var temp_price = 0;
+    const navigate=useNavigate();
     var temp_discount = 0;
     const [price, changeprice] = useState(0);
     const [pricekey,changepricekey]=useState(Math.random());
@@ -21,10 +23,9 @@ function Cart() {
     const [cartelem, changecartelem] = useState([]);
     const [cartelemquantity, changecartelemquantity] = useState({});
     const [quantitykey, changequantitykey] = useState([]);
-    // cartelem.findIndex()
-    // if (JSON.parse(localStorage.getItem('user')).cart) {
-    //     changecart();
-    // }
+    const [addressstatus, changeaddressstatus] = useState(true);
+    const [address, changeaddress] = useState(JSON.parse(localStorage.getItem('user')).address);
+    const [buttontext, changebuttontext] = useState("edit");
     async function placeorder() {
         ref.current.continuousStart(0);
         let products = [];
@@ -33,10 +34,11 @@ function Cart() {
         }
         await axios.post("https://infinite-falls-68793.herokuapp.com/orders", {
             "user_email": JSON.parse(localStorage.getItem('user')).email,
-            "address": JSON.parse(localStorage.getItem('user')).address,
+            "address": address,
             "date": "not provided",
             "products": JSON.stringify(products),
             "total_amount": price,
+            "products_quantity":JSON.stringify(cartelemquantity),
         }, {
             headers: {
                 Authorization:
@@ -44,6 +46,7 @@ function Cart() {
             },
         }).then((res) => {
             console.log(res);
+            navigate('/order',{state:res.data})
 
         }).catch((err) => {
             console.log(err);
@@ -108,14 +111,29 @@ function Cart() {
                     <div className="w-3/5 px-10 py-10" style={{ 'backgroundColor': '#C4C4C4', 'height': "600px" }}>
                         <div className="w-full flex">
                             <div className="w-max"><h1 className=" text-black font-semibold text-base">Delivered To:</h1></div>
-                            <div className="w-80 ml-2 flex flex-col items-end"><h1 className=" text-black text-base">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias dolorem nam tempore facere nesciunt voluptatibus laborum ullam unde itaque ex similique voluptas consequuntur natus veniam, at, provident explicabo facilis molestiae.</h1>
-
+                            <div className="w-full ml-2 flex flex-col items-end"><input autoComplete='off' disabled={addressstatus} id="addressinput" style={{'boxShadow':'none'}} className="bg-transparent w-full outline-none border-none text-black p-0" type="text" value={address} onChange={(e)=>{
+                                changeaddress(e.target.value);
+                            }} />
+                            
+                            <button onClick={(e)=>{
+                                e.preventDefault();
+                                if(buttontext=="edit"){
+                                changeaddressstatus(false);
+                                changebuttontext("submit");
+                                }
+                                else{
+                                    changeaddressstatus(true);
+                                    changebuttontext("edit");
+                                }
+                            }} className="bg-transparent text-black px-3 py-1 border-2  rounded" style={{ 'border': '1px solid black' }}>{buttontext}</button>
+                            
+                            
                             </div>
                         </div>
                         <h1 className=" text-black font-semibold text-base mt-2">{cartelem.length} items</h1>
                         <div className="mt-3 h-60 w-full overflow-auto">
 
-                            {cartelem.map((element, index) => {
+                        {cartelem.map((element, index) => {
                                 return <div className="w-full px-5 py-5 flex rounded">
                                     <img src={JSON.parse(element.photos)[0]} style={{ 'height': "120px", 'width': '120px' }} alt="" />
                                     <div className=" pt-1 ml-2 flex flex-col justify-between" style={{ 'height': "120px" }}>
@@ -123,8 +141,35 @@ function Cart() {
                                             <h1 className=" text-black font-semibold text-sm">{element.product_name}</h1>
                                             <h1 className=" text-black font-normal text-sm">{element.brand}</h1>
                                             <div className="flex mt-2">
-                                                <h1 className=" text-black font-normal text-xs">Quantity: 1</h1>
-                                                <h1 className=" text-black font-normal text-xs ml-10">Rs. {element.price}</h1>
+                                                <div className="flex rounded-sm bg-white items-center"><span onClick={(e) => {
+                                                    if (cartelemquantity[element.id] > 1) {
+                                                        let quantitykey = [];
+                                                        quantitykey.push(...quantitykey);
+                                                        quantitykey[index] = Math.random();
+                                                        changequantitykey(quantitykey);
+                                                        let temp = cartelemquantity;
+                                                        temp[element.id] -= 1;
+                                                        changecartelemquantity(temp);
+                                                        let price_=price;
+                                                        price_-=element.price;
+                                                        changeprice(price_);
+                                                        changepricekey(Math.random());
+                                                    }
+                                                }}><RemoveIcon className="text-black" /></span><h1 className="text-black mx-1 border-x-2  px-1" key={quantitykey[index]}>{cartelemquantity[element.id]}</h1><span onClick={(e) => {
+                                                    let quantitykey = [];
+                                                    quantitykey.push(...quantitykey);
+                                                    quantitykey[index] = Math.random();
+                                                    changequantitykey(quantitykey);
+                                                    let temp = cartelemquantity;
+                                                    temp[element.id] += 1;
+                                                    changecartelemquantity(temp);
+                                                    // console.log(temp);
+                                                    let price_=price;
+                                                        price_+=element.price;
+                                                        changeprice(price_);
+                                                        changepricekey(Math.random());
+                                                }}><AddIcon className="text-black" /></span></div>
+                                                <h1 className=" text-black font-normal text-xs ml-10">Rs. {(cartelemquantity[element.id])*element.price}</h1>
                                             </div>
                                         </div>
                                         <div className="flex h-max w-max">
@@ -134,13 +179,19 @@ function Cart() {
                                     </div>
                                     <div className="w-full flex justify-end">
                                         <div className="bg-white rounded-full w-max h-max">
-                                            <DeleteIcon className="text-black" onClick={async (e) => {
+                                            <DeleteIcon className="text-black cursor-pointer" onClick={async (e) => {
                                                 e.preventDefault();
+                                                ref.current.continuousStart(0);
                                                 let new_cart = [];
+                                                let current_cart=JSON.parse(JSON.parse(localStorage.getItem('user')).cart);
                                                 ref.current.continuousStart();
-                                                new_cart.push(...cart);
-                                                new_cart.splice(new_cart.indexOf(element.id), 1);
-                                                // console.log(JSON.stringify(new_cart));
+                                                for (let index = 0; index < current_cart.length; index++) {
+                                                    const element_ = current_cart[index];
+                                                    if(element_!=element.id)
+                                                    {
+                                                        new_cart.push(element);
+                                                    }
+                                                }
                                                 await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
                                                     {
                                                         "cart": JSON.stringify(new_cart)
@@ -169,7 +220,10 @@ function Cart() {
 
 
                         </div>
-                        <button className="w-full mt-10 bg-transparent rounded px-4 text-sm py-1 text-black border-black border-2 h-max ml-auto">Add More Products</button>
+                        <button className="w-full mt-10 bg-transparent rounded px-4 text-sm py-1 text-black  h-max ml-auto" onClick={(e)=>{
+                            e.preventDefault();
+                            navigate('/products')
+                        }} style={{'border':'1px solid black'}}>Add More Products</button>
                     </div>
                     <div className="w-2/5 px-10 py-10" style={{ 'backgroundColor': "#F2F1F1", 'height': '550px' }}>
                         <div className="h-1 bg-black w-3/5 mx-auto"></div>
@@ -289,13 +343,19 @@ function Cart() {
                                     </div>
                                     <div className="w-full flex justify-end">
                                         <div className="bg-white rounded-full w-max h-max">
-                                            <DeleteIcon className="text-black" onClick={async (e) => {
+                                            <DeleteIcon className="text-black cursor-pointer" onClick={async (e) => {
                                                 e.preventDefault();
+                                                ref.current.continuousStart(0);
                                                 let new_cart = [];
+                                                let current_cart=JSON.parse(JSON.parse(localStorage.getItem('user')).cart);
                                                 ref.current.continuousStart();
-                                                new_cart.push(...cart);
-                                                new_cart.splice(new_cart.indexOf(element.id), 1);
-                                                // console.log(JSON.stringify(new_cart));
+                                                for (let index = 0; index < current_cart.length; index++) {
+                                                    const element_ = current_cart[index];
+                                                    if(element_!=element.id)
+                                                    {
+                                                        new_cart.push(element);
+                                                    }
+                                                }
                                                 await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
                                                     {
                                                         "cart": JSON.stringify(new_cart)
@@ -322,7 +382,10 @@ function Cart() {
                                 </div>
                             })}
                         </div>
-                        <button className="w-full mt-10 bg-transparent rounded px-4 text-sm py-1 text-black border-black border-2 h-max ml-auto">Add More Products</button>
+                        <button className="w-full mt-10 bg-transparent rounded px-4 text-sm py-1 text-black border-black border-2 h-max ml-auto" onClick={(e)=>{
+                            e.preventDefault();
+                            navigate('/products')
+                        }}>Add More Products</button>
                     </div>
                     <div className="w-full px-10 py-10" style={{ 'backgroundColor': "#F2F1F1", 'height': '550px' }}>
                         <div className="h-1 bg-black w-3/5 mx-auto"></div>

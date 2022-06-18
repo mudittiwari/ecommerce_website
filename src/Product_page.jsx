@@ -16,7 +16,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mate
 import ExpandMoreIcon from '../node_modules/@material-ui/icons/ExpandMore';
 import Navbar from './Navbar';
 function Product_page() {
-    const [index,changeindex]=useState(0);
+    const [index, changeindex] = useState(0);
     const [related_prods, changerelatedprods] = useState([]);
     const [related_prodskey, changerelatedprodskey] = useState(Math.random());
     const navigate = useNavigate();
@@ -27,12 +27,12 @@ function Product_page() {
     const ref = useRef(null);
     const useStyles = makeStyles({
         summary: {
-          backgroundColor: 'black',
-          color:'white'
+            backgroundColor: 'black',
+            color: 'white'
         },
     }
-      );
-      const classes=useStyles();
+    );
+    const classes = useStyles();
     // if(data.wishlist)
     // {
     //     changewishlist(data.wishlist);
@@ -68,14 +68,14 @@ function Product_page() {
                 </div> */}
                 <div className='w-full md:flex-row lg:flex-row xl:flex-row 2xl:flex-row flex-col flex justify-evenly mt-10'>
                     <div className='md:w-2/5 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full flex flex-col'>
-                        <img className='hidden md:block lg:block xl:block 2xl:block' src={JSON.parse(data.photos)[index]} width="300px" style={{'width':'300px','height':'300px'}} alt="" />
+                        <img className='hidden md:block lg:block xl:block 2xl:block' src={JSON.parse(data.photos)[index]} width="300px" style={{ 'width': '300px', 'height': '300px' }} alt="" />
                         <img className='w-full block md:hidden lg:hidden xl:hidden 2xl:hidden' src={JSON.parse(data.photos)[index]} alt="" />
                         <div className='flex mt-3 px-3'>
-                        {JSON.parse(data.photos).map((element,index)=>{
-                            return <div className='w-10 mx-1 cursor-pointer'>
-                                <img style={{'width':'80px','height':'80px'}} onClick={(e)=>{e.preventDefault();changeindex(index)}} src={element} alt="" />
-                            </div>;
-                        })}
+                            {JSON.parse(data.photos).map((element, index) => {
+                                return <div className='w-10 mx-1 cursor-pointer'>
+                                    <img style={{ 'width': '80px', 'height': '80px' }} onClick={(e) => { e.preventDefault(); changeindex(index) }} src={element} alt="" />
+                                </div>;
+                            })}
                         </div>
                     </div>
                     <div className='md:w-2/5 md:px-0 lg:px-0 xl:px-0 2xl:px-0 px-4 lg:w:2/5 xl:w-2/5 2xl:w-2/5 w-full pt-5 '>
@@ -90,31 +90,33 @@ function Product_page() {
                                     navigate("/login");
                                     return;
                                 }
-                                ref.current.continuousStart(0);
-                                let new_wishlist = [];
-                                new_wishlist.push(...wishlist);
-                                new_wishlist.push(data.id);
-                                changewishlist(new_wishlist);
-                                console.log(wishlist);
-                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
-                                    {
-                                        "wishlist": JSON.stringify(new_wishlist)
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization:
-                                                `Bearer ${localStorage.getItem('jwt')}`,
+                                if (wishlist.indexOf(data.id) == -1) {
+                                    ref.current.continuousStart(0);
+                                    let new_wishlist = [];
+                                    new_wishlist.push(...wishlist);
+                                    new_wishlist.push(data.id);
+                                    changewishlist(new_wishlist);
+                                    console.log(wishlist);
+                                    await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
+                                        {
+                                            "wishlist": JSON.stringify(new_wishlist)
                                         },
-                                    }).then((res) => {
-                                        console.log(res.data);
+                                        {
+                                            headers: {
+                                                Authorization:
+                                                    `Bearer ${localStorage.getItem('jwt')}`,
+                                            },
+                                        }).then((res) => {
+                                            console.log(res.data);
 
-                                        localStorage.setItem('user', JSON.stringify(res.data));
-                                        // ref.current.complete();
-                                    }).catch((err) => {
-                                        console.log(err);
-                                        // ref.current.complete();
-                                    })
-                                ref.current.complete();
+                                            localStorage.setItem('user', JSON.stringify(res.data));
+                                            // ref.current.complete();
+                                        }).catch((err) => {
+                                            console.log(err);
+                                            // ref.current.complete();
+                                        })
+                                    ref.current.complete();
+                                }
                             }} className='px-8 mx-3 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Wishlist</button>
                             <button onClick={async (e) => {
                                 e.preventDefault();
@@ -122,31 +124,33 @@ function Product_page() {
                                     navigate("/login");
                                     return;
                                 }
-                                ref.current.continuousStart(0);
-                                let new_cart = [];
-                                new_cart.push(...cart);
-                                new_cart.push(data.id);
-                                changecart(new_cart);
-                                // console.log(new_cart);
-                                await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
-                                    {
-                                        "cart": JSON.stringify(new_cart)
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization:
-                                                `Bearer ${localStorage.getItem('jwt')}`,
+                                if (cart.indexOf(data.id) == -1) {
+                                    ref.current.continuousStart(0);
+                                    let new_cart = [];
+                                    new_cart.push(...cart);
+                                    new_cart.push(data.id);
+                                    changecart(new_cart);
+                                    // console.log(new_cart);
+                                    await axios.put(`https://infinite-falls-68793.herokuapp.com/users/me`,
+                                        {
+                                            "cart": JSON.stringify(new_cart)
                                         },
-                                    }).then((res) => {
-                                        console.log(res.data);
+                                        {
+                                            headers: {
+                                                Authorization:
+                                                    `Bearer ${localStorage.getItem('jwt')}`,
+                                            },
+                                        }).then((res) => {
+                                            console.log(res.data);
 
-                                        localStorage.setItem('user', JSON.stringify(res.data));
-                                        // ref.current.complete();
-                                    }).catch((err) => {
-                                        console.log(err);
-                                        // ref.current.complete();
-                                    })
-                                ref.current.complete();
+                                            localStorage.setItem('user', JSON.stringify(res.data));
+                                            // ref.current.complete();
+                                        }).catch((err) => {
+                                            console.log(err);
+                                            // ref.current.complete();
+                                        })
+                                    ref.current.complete();
+                                }
                             }} className='px-8 mx-3 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0 py-1 rounded-lg' style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }}>Cart</button>
                         </div>
                         <div className='mt-7'>
@@ -222,7 +226,7 @@ function Product_page() {
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
-                   
+
 
                 </div>
 

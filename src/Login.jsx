@@ -32,6 +32,14 @@ function Login() {
                     }} className="mt-10 rounded-xl w-72 py-1 text-black" type="password" placeholder="Password" />
                     <button className="text-white text-base mt-5 px-10 py-1 rounded-md" style={{ 'backgroundColor': 'rgba(255, 0, 122, 1)' }} onClick={async(e)=>{
                         e.preventDefault();
+                        if(email.indexOf('@')==-1 || email.indexOf('.com')==-1)
+                            alert("please enter a valid email");
+                        if(email.length==0)
+                            alert("please enter email address");
+                        if(password.length==0)
+                            alert("please enter password");
+                        if(password.length<8)
+                            alert("please enter a valid password");
                         ref.current.continuousStart(0);
                         await axios.post("https://infinite-falls-68793.herokuapp.com/auth/local/",{
                             "identifier":email,
@@ -48,6 +56,10 @@ function Login() {
                             if(err.response.data.message[0].messages[0].id=="Auth.form.error.confirmed")
                             {
                                 navigate("/confirmemail",{state:{email:email}})
+                            }
+                            else
+                            {
+                                alert("invalid credentials");
                             }
                             ref.current.complete();
                         });
@@ -87,14 +99,7 @@ function Login() {
                         Terms & Privacy Policy
                     </button>
                 </div>
-                <div className="flex justify-center mt-20 mb-5">
-                    <button className="text-xs" onClick={(e)=>{
-                        e.preventDefault();
-                        navigate("/Admin_Panel");
-                    }}>
-                        Admin Login
-                    </button>
-                </div>
+                
             </div>
         </>
     );
