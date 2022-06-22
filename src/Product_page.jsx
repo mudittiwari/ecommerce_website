@@ -255,7 +255,7 @@ function Product_page() {
 
                 <div className='w-full md:px-10 lg:px-10 xl:px-10 2xl:px-10 px-4 mt-12'>
                     <h1 className='text-xl mb-5 text-center'>Related Products</h1>
-                    <div className='flex justify-around sm:hidden md:hidden xl:hidden 2xl:hidden'>
+                    <div className='flex justify-around sm:hidden md-hidden lg:hidden md:hidden xl:hidden 2xl:hidden'>
                         <OwlCarousel key={related_prodskey} items={2} margin={20} className="owl-theme" autoplay={true}>
 
                             {related_prods.map((element, index) => {
@@ -276,9 +276,9 @@ function Product_page() {
                         </OwlCarousel>
 
                     </div>
-                    <div className='hidden sm:hidden md:hidden xl:block 2xl:block'>
+                    <div className='hidden lg:block xl:block 2xl:block'>
                         <div className='flex justify-around'>
-                            <OwlCarousel key={related_prodskey} margin={20} items={4} className="owl-theme" autoplay={true}>
+                            <OwlCarousel  key={related_prodskey} margin={20} items={3} className="owl-theme" autoplay={true}>
 
                                 {related_prods.map((element, index) => {
                                     // console.log(element.id);
@@ -287,7 +287,7 @@ function Product_page() {
                                         changedata(element);
 
                                     }} className='w-full cursor-pointer h-max bg-white p-3 flex flex-col items-center' style={{ 'borderRight': '2px solid #FF007A' }}>
-                                        <img className="w-4/5" style={{ 'width': '300px', 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
+                                        <img className="w-4/5" style={{ 'height': '300px' }} src={JSON.parse(element.photos)[0]} alt="" />
                                         <h6 className='font-bold text-black'>{element.product_name}</h6>
                                         <h6 className='text-black text-center'>{element.brand}</h6>
                                         <h6 className='text-black text-center'>Rs {element.price}</h6>
@@ -298,7 +298,7 @@ function Product_page() {
 
                         </div>
                     </div>
-                    <div className='hidden sm:block md:block'>
+                    <div className='hidden sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
                         <div className='flex justify-around'>
                             <OwlCarousel key={related_prodskey} margin={20} items={3} className="owl-theme" autoplay={true}>
 

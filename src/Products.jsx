@@ -472,6 +472,7 @@ function Products() {
                             {filtered ? filtered_prods.map((element, index) => {
                                 return <div className='md:w-2/6 lg:w-2/6 xl:w-2/6 2xl:w-2/6 w-2/5 h-max my-5 mx-2 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
                                     e.preventDefault();
+                                    window.scrollTo(0,0);
                                     navigate("/product_page", { state: element });
 
                                 }}>
@@ -483,6 +484,7 @@ function Products() {
                             }) : products.map((element, index) => {
                                 return <div className='md:w-2/6 lg:w-2/6 xl:w-2/6 2xl:w-2/6 w-2/5 h-max my-5 mx-2 md:mx-10 lg:mx-10 xl:mx-10 2xl:mx-10 cursor-pointer bg-white p-3 rounded-lg flex flex-col' onClick={(e) => {
                                     e.preventDefault();
+                                    window.scrollTo(0,0);
                                     navigate("/product_page", { state: element });
 
                                 }}>

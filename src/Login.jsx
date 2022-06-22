@@ -10,7 +10,9 @@ function Login() {
     const [password,changepassword]=useState();
     const navigate=useNavigate();
     useEffect(()=>{
-        console.log(localStorage.getItem('user'));
+        // console.log(localStorage.getItem('user'));
+        // localStorage.removeItem('user');
+        // localStorage.removeItem('jwt');
         if (localStorage.getItem('user')) {
             navigate("/");
         }

@@ -124,7 +124,7 @@ function Item()
     return (
         // <Paper style={{'borderRadius':'0px !important'}}>
             <div>
-                        <img src={slidercomp} alt="..." />
+                        <img src={slidercomp} className="w-full" alt="..." />
                     </div>
         // </Paper>
     )

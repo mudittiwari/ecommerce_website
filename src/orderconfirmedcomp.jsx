@@ -58,6 +58,7 @@ function Orderconfirmedcomp(props) {
                                             changereviewsinput(temp);
                                         }} value={reviewsinput[index]} id='searchinput' type="text" placeholder='Add Review' className=' bg-transparent border-0 p-0 w-36 text-white' />
                                         <span onClick={async(e) => {
+                                            ref.current.continuousStart();
                                             await axios.get(`https://infinite-falls-68793.herokuapp.com/products/${element.id}`).then(async(res)=>{
                                                 let reviews=[];
                                                 
@@ -71,7 +72,8 @@ function Orderconfirmedcomp(props) {
                                                     reviews.push({'user':JSON.parse(localStorage.getItem('user')).email,'review':reviewsinput[index]});
                                                 }
                                                 await axios.put(`https://infinite-falls-68793.herokuapp.com/products/${element.id}`,{
-                                                    'reviews':reviews
+                                                    'reviews':JSON.stringify(reviews)
+                                                    // 'reviews':null
                                                 },{
                                                     headers: {
                                                         Authorization:
@@ -85,6 +87,11 @@ function Orderconfirmedcomp(props) {
                                             }).catch((err)=>{
                                                 console.log(err);
                                             })
+                                            let temp=[];
+                                            temp.push(...reviewsinput);
+                                            temp[index]="";
+                                            changereviewsinput(temp);
+                                            ref.current.complete();
                                         }}><Arrowicon className="mr-10 text-white cursor-pointer" /></span>
                                     </div>:<h1></h1>}
                                 </div>
